@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from '../../assets/styles/globalStyled';
+import AddProduct from './Components/Modals/AddProduct';
 
 ProductPage.propTypes = {
 
@@ -10,6 +11,10 @@ ProductPage.propTypes = {
 
 
 function ProductPage(props) {
+
+    const [isVisible, setIsVisible] = React.useState(false);
+
+
     const columns = [
         { title: '#', dataIndex: '_id', key: '_id' },
         { title: 'Image', dataIndex: 'image', key: 'image' },
@@ -62,11 +67,13 @@ function ProductPage(props) {
 
     return (
         <Wrapper>
+            <AddProduct isVisible={isVisible} setIsVisible={setIsVisible} />
             <TopStyled>
                 <TitleStyled>Products</TitleStyled>
                 <div>
                     <Tooltip title="Add product">
                         <AddButtonStyled
+                            onClick={() => setIsVisible(true)}
                             shape="circle"
                             icon={<PlusOutlined />} />
                     </Tooltip>

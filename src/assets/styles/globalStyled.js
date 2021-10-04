@@ -69,6 +69,19 @@ const EditButtonStyled = styled(Button)`
         }
         border-color:#ff9f43;
    }
+   `;
+
+const AddButton = styled(Button)`
+   margin-top:1rem;
+   background:#7367f0!important;
+   box-shadow:1px 1px 10px 0px #BBB;
+   border-color:#7367f0;
+   color:#FFF;
+   
+   &:hover{
+       color:#FFF;
+       border-color:#ff9f43;
+  }
 `;
 
-export { Wrapper, TopStyled, TitleStyled, AddButtonStyled, RemoveButtonStyled, EditButtonStyled }
+export { Wrapper, TopStyled, TitleStyled, AddButtonStyled, RemoveButtonStyled, EditButtonStyled, AddButton }
