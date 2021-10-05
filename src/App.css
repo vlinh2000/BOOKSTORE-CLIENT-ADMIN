@@ -15,3 +15,7 @@
     margin-bottom: 4rem;
     min-height: calc(100vh - 11rem);
 }
+
+.failed .ant-select-selector {
+    border-color: #ff4d4f !important;
+}

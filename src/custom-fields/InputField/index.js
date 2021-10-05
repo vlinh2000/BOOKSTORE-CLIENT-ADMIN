@@ -4,6 +4,7 @@ import { Form, Input } from 'antd';
 
 import { Controller } from 'react-hook-form'
 import styled from 'styled-components';
+import { FormItemStyled } from 'assets/styles/globalStyled';
 
 InputField.propTypes = {
     name: PropTypes.string,
@@ -21,10 +22,7 @@ InputField.defaultProps = {
     placeholder: ''
 };
 
-const FormItemStyled = styled(Form.Item)`
-    margin-bottom:10px;
 
-`;
 
 const InputStyled = styled(Input)`
     min-height:45px;

@@ -1,4 +1,5 @@
 import { Button } from "antd";
+import { Form } from "antd";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -84,4 +85,13 @@ const AddButton = styled(Button)`
   }
 `;
 
-export { Wrapper, TopStyled, TitleStyled, AddButtonStyled, RemoveButtonStyled, EditButtonStyled, AddButton }
+const FormItemStyled = styled(Form.Item)`
+    margin-bottom:20px;
+
+    .ant-form-item-explain.ant-form-item-explain-error{
+        font-size:11px;
+        margin-top:0.25rem;
+    }
+`;
+
+export { Wrapper, TopStyled, TitleStyled, AddButtonStyled, RemoveButtonStyled, EditButtonStyled, AddButton, FormItemStyled }

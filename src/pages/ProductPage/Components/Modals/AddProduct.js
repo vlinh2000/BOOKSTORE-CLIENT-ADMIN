@@ -5,27 +5,25 @@ import { useForm } from 'react-hook-form';
 import InputField from '../../../../custom-fields/InputField';
 import { PlusSquareOutlined, UploadOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { AddButton } from '../../../../assets/styles/globalStyled';
+import { AddButton } from 'assets/styles/globalStyled';
+import SelectField from 'custom-fields/SelectField';
+import UploadField from 'custom-fields/UploadField';
+
+import { yupResolver } from '@hookform/resolvers/yup';
+import { defaultValues, productSchema } from 'yup/productSchema';
 
 AddProduct.propTypes = {
 
 };
 
-const UploadStyled = styled(Upload)`
-    .ant-upload-list{
-        max-height:100px;
-        overflow-y:auto;
-        padding:0 1rem;
-    }
 
-`;
 
 function AddProduct(props) {
 
     const { isVisible, setIsVisible } = props;
 
-    const { control, handleSubmit } = useForm();
 
+    const { control, handleSubmit } = useForm({ resolver: yupResolver(productSchema), defaultValues });
 
 
     const onSubmit = values => {
@@ -50,49 +48,53 @@ function AddProduct(props) {
                                 placeholder="Name"
                                 control={control}
                             />
+                            <SelectField
+                                name="category"
+                                label="Category"
+                                control={control}
+                                options={[{ _id: 'a', categoryName: "test1" }]}
+                            />
+
+                            <InputField
+                                name="description"
+                                placeholder="Description"
+                                type="textarea"
+                                control={control}
+                            />
+                        </Col>
+                        <Col span="7">
+                            <InputField
+                                name="author"
+                                placeholder="Author"
+                                control={control}
+                            />
                             <InputField
                                 name="stockQuantity"
                                 placeholder="Quantity"
                                 control={control}
                                 type="number"
                             />
-                            <InputField
-                                name="decription"
-                                placeholder="Description"
-                                type="textarea"
+                            <UploadField
+                                name="banner"
+                                label="Banner Image"
                                 control={control}
+                                maxCount={1}
                             />
                         </Col>
-                        <Col span="6">
-                            <InputField
-                                name="author"
-                                placeholder="Author"
-                                control={control}
-                            />
-                            <Form.Item label="Category">
-                                <Select defaultValue={1}>
-                                    <Select.Option value={1}>1</Select.Option>
-                                    <Select.Option value={2}>2</Select.Option>
-                                </Select>
-                            </Form.Item>
+                        <Col span={7}>
                             <InputField
                                 name="price"
                                 placeholder="Price"
                                 control={control}
                                 type="number"
                             />
-                        </Col>
-                        <Col span={8}>
-                            <Form.Item label="Banner Image">
-                                <UploadStyled >
-                                    <Button icon={<UploadOutlined />}>Upload</Button>
-                                </UploadStyled>
-                            </Form.Item>
-                            <Form.Item label="Images Detail">
-                                <UploadStyled >
-                                    <Button icon={<UploadOutlined />}>Upload</Button>
-                                </UploadStyled>
-                            </Form.Item>
+
+                            <UploadField
+                                name="images"
+                                label="Images Detail"
+                                control={control}
+                                maxCount={4}
+                            />
                         </Col>
                     </Row>
                     <AddButton
