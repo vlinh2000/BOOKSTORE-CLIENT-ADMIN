@@ -7,6 +7,9 @@ import { Col, Row } from 'antd';
 import SideBar from './components/SideBar';
 import DashboardPage from './pages/DashboardPage';
 import ProductPage from './pages/ProductPage';
+import CategoryPage from 'pages/CategoryPage';
+import BillPage from 'pages/BillPage';
+import UserPage from 'pages/UserPage';
 
 
 export const history = createBrowserHistory();
@@ -26,9 +29,9 @@ function App() {
                 <Redirect exact from="/" to="/dashboard" />
                 <Route path="/dashboard" component={DashboardPage}></Route>
                 <Route path="/product" component={ProductPage}></Route>
-                <Route path="/bill" component={() => <div>bill</div>}></Route>
-                <Route path="/category" component={() => <div>category</div>}></Route>
-                <Route path="/user" component={() => <div>user</div>}></Route>
+                <Route path="/bill" component={BillPage}></Route>
+                <Route path="/category" component={CategoryPage}></Route>
+                <Route path="/user" component={UserPage}></Route>
                 <Route component={<div>not found</div>} />
               </Switch>
             </div>

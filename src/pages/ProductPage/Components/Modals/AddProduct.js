@@ -33,7 +33,7 @@ function AddProduct(props) {
         <div>
             <Modal
                 width={700}
-                title="Add product"
+                title="New product"
                 visible={isVisible}
                 footer={false}
                 onCancel={() => setIsVisible(false)}
@@ -41,13 +41,13 @@ function AddProduct(props) {
                 <Form
                     onFinish={handleSubmit(onSubmit)}
                     layout="vertical">
+                    <InputField
+                        name="name"
+                        placeholder="Name"
+                        control={control}
+                    />
                     <Row justify="space-between">
                         <Col span="6">
-                            <InputField
-                                name="name"
-                                placeholder="Name"
-                                control={control}
-                            />
                             <SelectField
                                 name="category"
                                 label="Category"
