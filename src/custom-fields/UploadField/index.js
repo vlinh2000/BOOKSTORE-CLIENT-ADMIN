@@ -7,7 +7,19 @@ import { Button, message, Upload } from 'antd';
 import styled from 'styled-components';
 
 UploadField.propTypes = {
+    name: PropTypes.string,
+    label: PropTypes.string,
+    handleReadFile: PropTypes.func,
 
+    maxCount: PropTypes.number,
+};
+
+UploadField.defaultProps = {
+    name: '',
+    label: '',
+    handleReadFile: null,
+
+    maxCount: 1,
 };
 const UploadStyled = styled(Upload)`
     button {
@@ -19,7 +31,7 @@ const UploadStyled = styled(Upload)`
 `;
 
 function UploadField(props) {
-    const { name, label, control, maxCount } = props;
+    const { name, label, control, maxCount, handleReadFile, listType } = props;
 
     const beforeUpload = (file) => {
         const isValid = file.type === ('image/png' || 'image/jpeg');
@@ -27,6 +39,7 @@ function UploadField(props) {
             message.error("You can only upload JPNG or PNG or JPG file");
             return true;
         }
+
         return false;
     }
 
@@ -41,7 +54,22 @@ function UploadField(props) {
 
                     const isValid = file.type === ('image/png' || 'image/jpeg');
 
-                    isValid && field.onChange(fileList);
+                    if (!isValid) return;
+
+                    field.onChange(fileList);
+
+                    if (handleReadFile) {
+
+                        const readFile = async (file) => {
+                            const src = await new Promise(resolve => {
+                                const reader = new FileReader();
+                                reader.readAsDataURL(file.originFileObj);
+                                reader.onload = () => resolve(reader.result);
+                            });
+                            handleReadFile(src);
+                        }
+                        readFile(fileList[0]);
+                    }
                 }
                 return <FormItemStyled
                     validateStatus={errors[field.name] && 'error'}

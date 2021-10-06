@@ -34,7 +34,27 @@ const AvatarStyled = styled(Avatar)`
     font-size:2rem;
 `;
 
-const UploadFieldStyled = styled(UploadField)`
+const UploadStyled = styled.div`
+    button {
+            height:30px!important;
+            width:30px;
+            background-color:#7367f0;
+            border-color:#7367f0;
+            color:#EEE;
+
+            &:hover{
+                background-color:#7367f0;
+                border-color:#7367f0;
+                color:#EEE;
+                box-shadow:0px 8px 25px -8px #7367f0;
+
+            }
+        }
+
+    .ant-upload-list-item-info,.ant-upload-list{
+        display:none;
+    }
+
 `;
 
 function Profile(props) {
@@ -43,8 +63,10 @@ function Profile(props) {
 
     const { control, handleSubmit } = useForm();
 
-    const onChange = (file) => {
-        console.log(file);
+    const [currentAvatar, setCurrentAvatar] = React.useState("https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/avatar-s-11.14cf1734.jpg");
+
+    const handleReadFile = url => {
+        setCurrentAvatar(url);
     }
 
     const onSubmit = values => {
@@ -63,14 +85,15 @@ function Profile(props) {
                     onFinish={handleSubmit(onSubmit)}
                     layout="vertical">
                     <TopProfile>
-                        <AvatarStyled src="https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/avatar-s-11.14cf1734.jpg" alt="avatar">A</AvatarStyled>
+                        <AvatarStyled src={currentAvatar} alt="avatar">A</AvatarStyled>
                         <div>
-                            <div>
-                                <UploadFieldStyled
+                            <UploadStyled>
+                                <UploadField
+                                    handleReadFile={handleReadFile}
                                     maxCount={1}
                                     name="avatar"
                                     control={control} />
-                            </div>
+                            </UploadStyled>
                             <p>Allow JPGE or PNG . Max size of 800kB</p>
                         </div>
                     </TopProfile>
