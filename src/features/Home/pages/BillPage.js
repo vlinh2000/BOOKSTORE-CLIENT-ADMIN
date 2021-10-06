@@ -3,21 +3,45 @@ import PropTypes from 'prop-types';
 import { Button, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from '../../assets/styles/globalStyled';
-import AddCategory from '../../features/Home/Components/Modals/AddCategory';
 
-CategoryPage.propTypes = {
+BillPage.propTypes = {
 
 };
 
 
-function CategoryPage(props) {
+function BillPage(props) {
 
-    const [isVisible, setIsVisible] = React.useState(false);
+    const [currentBill, setCurrentBill] = React.useState(0);
 
+    const expandedRowRender = () => {
+        const columns = [
+            { title: 'Image', dataIndex: 'image', key: 'image' },
+            { title: 'Name', dataIndex: 'name', key: 'name' },
+            { title: 'Quantity', dataIndex: 'quantity', key: 'quantity' },
+            { title: 'Price', dataIndex: 'price', key: 'price' },
+        ];
+
+        const data = [];
+        for (let i = 0; i < 3; ++i) {
+            data.push({
+                key: i,
+                date: '2014-12-24 23:12:00',
+                name: 'This is production name',
+                upgradeNum: 'Upgraded: 56',
+            });
+        }
+        return <Table columns={columns} dataSource={data} pagination={false} />;
+    };
 
     const columns = [
         { title: '#', dataIndex: '_id', key: '_id' },
         { title: 'Name', dataIndex: 'name', key: 'name' },
+        { title: 'Phone', dataIndex: 'phone', key: 'phone' },
+        { title: 'Address', dataIndex: 'address', key: 'address' },
+        { title: 'Order date', dataIndex: 'orderDate', key: 'orderDate' },
+        { title: 'Delivery date', dataIndex: 'deliveryDate', key: 'deliveryDate' },
+        { title: 'Total Price', dataIndex: 'totalPrice', key: 'totalPrice' },
+        { title: 'Status', dataIndex: 'status', key: 'status' },
         {
             title: <SettingOutlined />, key: 'action', render: () => <>
                 <Tooltip title="Edit">
@@ -30,7 +54,9 @@ function CategoryPage(props) {
     ];
 
     const data = [
-        { key: 0, name: "Trương Việt Linh", },
+        {
+            key: 0, name: "Trương Việt Linh"
+        },
         { key: 1, name: "Trương Việt Linh", },
         { key: 2, name: "Trương Việt Linh", },
         { key: 3, name: "Trương Việt Linh", },
@@ -49,18 +75,15 @@ function CategoryPage(props) {
         }),
     };
 
+    const onExpand = (expanded, record) => {
+        console.log(record);
+    }
+
     return (
         <Wrapper>
-            <AddCategory isVisible={isVisible} setIsVisible={setIsVisible} />
             <TopStyled>
-                <TitleStyled>Categories</TitleStyled>
+                <TitleStyled>Bills</TitleStyled>
                 <div>
-                    <Tooltip title="Add product">
-                        <AddButtonStyled
-                            onClick={() => setIsVisible(true)}
-                            shape="circle"
-                            icon={<PlusOutlined />} />
-                    </Tooltip>
                     <Tooltip title="Remove these products">
                         <Popconfirm
                             title="Are you sure?"
@@ -81,10 +104,13 @@ function CategoryPage(props) {
                 rowSelection={rowSelection}
                 pagination={{ defaultPageSize: 6 }}
                 columns={columns}
+                expandable={{ expandedRowRender }}
                 dataSource={data}
+                onExpand={onExpand}
             />
         </Wrapper>
     );
 }
 
-export default CategoryPage;
+
+export default BillPage;

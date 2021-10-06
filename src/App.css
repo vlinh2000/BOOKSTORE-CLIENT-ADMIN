@@ -1,5 +1,6 @@
 .App {
     background-color: rgba(34, 41, 47, 0.05);
+    min-height: 100vh;
 }
 
 .active {

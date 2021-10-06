@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from '../../assets/styles/globalStyled';
-import AddCategory from '../../features/Home/Components/Modals/AddCategory';
+import AddCategory from '../Components/Modals/AddCategory';
 
 CategoryPage.propTypes = {
 

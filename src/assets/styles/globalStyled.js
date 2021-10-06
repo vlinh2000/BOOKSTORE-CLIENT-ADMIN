@@ -92,6 +92,9 @@ const FormItemStyled = styled(Form.Item)`
         font-size:11px;
         margin-top:0.25rem;
     }
+    label{
+        color:#6e6b7b;
+    }
 `;
 
 export { Wrapper, TopStyled, TitleStyled, AddButtonStyled, RemoveButtonStyled, EditButtonStyled, AddButton, FormItemStyled }

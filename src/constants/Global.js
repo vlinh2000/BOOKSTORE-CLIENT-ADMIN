@@ -1,4 +1,4 @@
-import LOGO from '../assets/images/logo.png'
+import LOGO from 'assets/images/logo.png'
 
 const ORDERS_OPTIONS = {
     chart: {

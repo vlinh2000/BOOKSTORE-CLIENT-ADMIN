@@ -3,21 +3,22 @@ import PropTypes from 'prop-types';
 import { Button, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from '../../assets/styles/globalStyled';
-import AddCategory from '../../features/Home/Components/Modals/AddCategory';
 
-CategoryPage.propTypes = {
+UserPage.propTypes = {
 
 };
 
 
-function CategoryPage(props) {
-
-    const [isVisible, setIsVisible] = React.useState(false);
-
+function UserPage(props) {
 
     const columns = [
         { title: '#', dataIndex: '_id', key: '_id' },
+        { title: 'Avatar', dataIndex: 'avatar', key: 'avatar' },
         { title: 'Name', dataIndex: 'name', key: 'name' },
+        { title: 'Phone', dataIndex: 'phone', key: 'phone' },
+        { title: 'Address', dataIndex: 'address', key: 'address' },
+        { title: 'Email', dataIndex: 'email', key: 'email' },
+        { title: 'Permission', dataIndex: 'permission', key: 'permission' },
         {
             title: <SettingOutlined />, key: 'action', render: () => <>
                 <Tooltip title="Edit">
@@ -51,17 +52,10 @@ function CategoryPage(props) {
 
     return (
         <Wrapper>
-            <AddCategory isVisible={isVisible} setIsVisible={setIsVisible} />
             <TopStyled>
-                <TitleStyled>Categories</TitleStyled>
+                <TitleStyled>Users</TitleStyled>
                 <div>
-                    <Tooltip title="Add product">
-                        <AddButtonStyled
-                            onClick={() => setIsVisible(true)}
-                            shape="circle"
-                            icon={<PlusOutlined />} />
-                    </Tooltip>
-                    <Tooltip title="Remove these products">
+                    <Tooltip title="Remove these users">
                         <Popconfirm
                             title="Are you sure?"
                             okText="Yes"
@@ -87,4 +81,5 @@ function CategoryPage(props) {
     );
 }
 
-export default CategoryPage;
+
+export default UserPage;

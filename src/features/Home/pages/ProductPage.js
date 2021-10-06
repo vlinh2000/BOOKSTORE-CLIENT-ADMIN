@@ -3,21 +3,37 @@ import PropTypes from 'prop-types';
 import { Button, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from '../../assets/styles/globalStyled';
-import AddCategory from '../../features/Home/Components/Modals/AddCategory';
+import AddProduct from './Components/Modals/AddProduct';
 
-CategoryPage.propTypes = {
+ProductPage.propTypes = {
 
 };
 
 
-function CategoryPage(props) {
+function ProductPage(props) {
 
     const [isVisible, setIsVisible] = React.useState(false);
 
 
     const columns = [
         { title: '#', dataIndex: '_id', key: '_id' },
-        { title: 'Name', dataIndex: 'name', key: 'name' },
+        { title: 'Image', dataIndex: 'image', key: 'image' },
+        {
+            title: 'Name', dataIndex: 'name', key: 'name', filters: [
+                {
+                    text: 'Joe',
+                    value: 'Joe',
+                },
+                {
+                    text: 'Jim',
+                    value: 'Jim',
+                }
+            ], onFilter: (value, record) => record.name.indexOf(value) === 0,
+        },
+        { title: 'Author ', dataIndex: 'author', key: 'author' },
+        { title: 'Category', dataIndex: 'category', key: 'category' },
+        { title: 'Stock quantity', dataIndex: 'stockQuantity', key: 'stockQuantity', sorter: (a, b) => a - b },
+        { title: 'Price', dataIndex: 'Price', key: 'Price', sorter: (a, b) => a - b },
         {
             title: <SettingOutlined />, key: 'action', render: () => <>
                 <Tooltip title="Edit">
@@ -30,11 +46,11 @@ function CategoryPage(props) {
     ];
 
     const data = [
-        { key: 0, name: "Trương Việt Linh", },
-        { key: 1, name: "Trương Việt Linh", },
-        { key: 2, name: "Trương Việt Linh", },
-        { key: 3, name: "Trương Việt Linh", },
-        { key: 4, name: "Trương Việt Linh", },
+        { key: 0, name: "Trương Việt Linh", phone: "0387746557", status: "" },
+        { key: 1, name: "Trương Việt Linh", phone: "0387746557", status: "" },
+        { key: 2, name: "Trương Việt Linh", phone: "0387746557", status: "" },
+        { key: 3, name: "Trương Việt Linh", phone: "0387746557", status: "" },
+        { key: 4, name: "Trương Việt Linh", phone: "0387746557", status: "" },
 
     ];
 
@@ -51,9 +67,9 @@ function CategoryPage(props) {
 
     return (
         <Wrapper>
-            <AddCategory isVisible={isVisible} setIsVisible={setIsVisible} />
+            <AddProduct isVisible={isVisible} setIsVisible={setIsVisible} />
             <TopStyled>
-                <TitleStyled>Categories</TitleStyled>
+                <TitleStyled>Products</TitleStyled>
                 <div>
                     <Tooltip title="Add product">
                         <AddButtonStyled
@@ -87,4 +103,4 @@ function CategoryPage(props) {
     );
 }
 
-export default CategoryPage;
+export default ProductPage;

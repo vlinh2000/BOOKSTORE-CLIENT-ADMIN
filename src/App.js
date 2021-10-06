@@ -2,14 +2,13 @@ import './App.css';
 import { Router, Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
 
 import { createBrowserHistory } from 'history'
-import Header from './components/Header';
-import { Col, Row } from 'antd';
-import SideBar from './components/SideBar';
-import DashboardPage from './pages/DashboardPage';
-import ProductPage from './pages/ProductPage';
-import CategoryPage from 'pages/CategoryPage';
-import BillPage from 'pages/BillPage';
-import UserPage from 'pages/UserPage';
+import React from 'react';
+import { Suspense } from 'react';
+import { Spin } from 'antd';
+
+const Login = React.lazy(() => import('features/Authentication/pages/Login'));
+const Home = React.lazy(() => import('features/Home'));
+
 
 
 export const history = createBrowserHistory();
@@ -17,28 +16,15 @@ export const history = createBrowserHistory();
 function App() {
   return (
     <div className="App">
-      <BrowserRouter  >
-        <Row>
-          <Col span={5}>
-            <SideBar />
-          </Col>
-          <Col span={19}>
-            <Header />
-            <div className="content">
-              <Switch>
-                <Redirect exact from="/" to="/dashboard" />
-                <Route path="/dashboard" component={DashboardPage}></Route>
-                <Route path="/product" component={ProductPage}></Route>
-                <Route path="/bill" component={BillPage}></Route>
-                <Route path="/category" component={CategoryPage}></Route>
-                <Route path="/user" component={UserPage}></Route>
-                <Route component={<div>not found</div>} />
-              </Switch>
-            </div>
-          </Col>
-        </Row>
-
-      </BrowserRouter>
+      <Suspense fallback={<Spin />}>
+        <BrowserRouter  >
+          <Switch>
+            <Redirect exact from="/" to="/home/dashboard" />
+            <Route path="/authentication/login" component={Login}></Route>
+            <Route path="/home" component={Home}></Route>
+          </Switch>
+        </BrowserRouter>
+      </Suspense>
     </div>
   );
 }

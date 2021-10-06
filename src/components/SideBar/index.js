@@ -71,27 +71,27 @@ function SideBar(props) {
             <MenuStyled>
                 <MenuItemStyled
                     icon={<DashboardOutlined />}>
-                    <LinkStyled to="/dashboard">
+                    <LinkStyled to="/home/dashboard">
                         Dashboard
                     </LinkStyled>
                 </MenuItemStyled>
                 <MenuItemStyled icon={<ReadOutlined />}>
-                    <LinkStyled to="product">
+                    <LinkStyled to="/home/product">
                         Product
                     </LinkStyled>
                 </MenuItemStyled>
                 <MenuItemStyled icon={<ShopOutlined />}>
-                    <LinkStyled to="/category">
+                    <LinkStyled to="/home/category">
                         Category
                     </LinkStyled>
                 </MenuItemStyled>
                 <MenuItemStyled icon={<WalletOutlined />}>
-                    <LinkStyled to="/bill">
+                    <LinkStyled to="/home/bill">
                         Bill
                     </LinkStyled>
                 </MenuItemStyled>
                 <MenuItemStyled icon={<UserOutlined />}>
-                    <LinkStyled to="/user">
+                    <LinkStyled to="/home/user">
                         User
                     </LinkStyled>
                 </MenuItemStyled>

@@ -38,7 +38,6 @@ function InputField(props) {
             name={name}
             control={control}
             render={({ field, formState: { errors } }) => {
-                console.log(errors);
 
                 return < FormItemStyled
                     validateStatus={errors[field.name] && 'error'}

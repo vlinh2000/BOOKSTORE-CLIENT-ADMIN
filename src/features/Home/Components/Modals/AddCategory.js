@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Select, Modal, Form, Input, Col, Row, Button, Upload } from 'antd';
+import { Modal, Form } from 'antd';
 import { useForm } from 'react-hook-form';
 import InputField from '../../../../custom-fields/InputField';
 import { PlusSquareOutlined, UploadOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
 import { AddButton } from 'assets/styles/globalStyled';
-import SelectField from 'custom-fields/SelectField';
-import UploadField from 'custom-fields/UploadField';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { categorySchema, defaultValues } from 'yup/categorySchema';
