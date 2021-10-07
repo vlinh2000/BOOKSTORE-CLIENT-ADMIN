@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Menu, Avatar, Button, Popover, Breadcrumb, Badge } from 'antd';
+import { Menu, Avatar, Button, Popover, Breadcrumb, Badge, Tooltip } from 'antd';
 
 import styled from 'styled-components';
 
@@ -60,25 +60,31 @@ function Header(props) {
         <HeaderStyled>
             <div>
                 <Link to="/product">
-                    <ButtonStyled
-                        size="large"
-                        shape="circle"
-                        type="text"
-                        icon={<ReadOutlined />} />
+                    <Tooltip title="Product">
+                        <ButtonStyled
+                            size="large"
+                            shape="circle"
+                            type="text"
+                            icon={<ReadOutlined />} />
+                    </Tooltip>
                 </Link>
                 <Link to="/category">
-                    <ButtonStyled
-                        size="large"
-                        shape="circle"
-                        type="text"
-                        icon={<ShopOutlined />} />
+                    <Tooltip title="Category">
+                        <ButtonStyled
+                            size="large"
+                            shape="circle"
+                            type="text"
+                            icon={<ShopOutlined />} />
+                    </Tooltip>
                 </Link>
                 <Link to="/bill">
-                    <ButtonStyled
-                        size="large"
-                        shape="circle"
-                        type="text"
-                        icon={<WalletOutlined />} />
+                    <Tooltip title="Bill">
+                        <ButtonStyled
+                            size="large"
+                            shape="circle"
+                            type="text"
+                            icon={<WalletOutlined />} />
+                    </Tooltip>
                 </Link>
 
             </div>

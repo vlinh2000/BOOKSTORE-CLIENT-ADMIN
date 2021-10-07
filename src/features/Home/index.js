@@ -5,10 +5,10 @@ import SideBar from 'components/SideBar';
 import Header from 'components/Header';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import DashboardPage from './pages/DashboardPage';
-import ProductPage from 'pages/ProductPage';
-import BillPage from 'pages/BillPage';
-import CategoryPage from 'pages/CategoryPage';
-import UserPage from 'pages/UserPage';
+import ProductPage from './pages/ProductPage';
+import BillPage from './pages/BillPage';
+import CategoryPage from './pages/CategoryPage';
+import UserPage from './pages/UserPage';
 import Profile from './Components/Modals/Profile';
 
 Home.propTypes = {

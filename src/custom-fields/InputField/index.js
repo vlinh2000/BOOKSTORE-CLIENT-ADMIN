@@ -49,6 +49,7 @@ function InputField(props) {
                             <InputStyled.TextArea
                                 {...field}
                                 autoSize={{ minRows: 4, maxRows: 6 }}
+                                defaultValue={field.value}
                                 allowClear
                                 disabled={disabled}
                                 type={type}
@@ -56,6 +57,7 @@ function InputField(props) {
                             :
                             <InputStyled
                                 {...field}
+                                defaultValue={field.value}
                                 allowClear
                                 disabled={disabled}
                                 type={type}

@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { Modal, Form, Avatar, Col, Row } from 'antd';
 import { useForm } from 'react-hook-form';
 import InputField from '../../../../custom-fields/InputField';
-import { PlusSquareOutlined, SaveOutlined, UploadOutlined } from '@ant-design/icons';
-import { AddButton, AddButtonStyled, RemoveButtonStyled } from 'assets/styles/globalStyled';
+import { PlusSquareOutlined, SaveOutlined, UndoOutlined, UploadOutlined } from '@ant-design/icons';
+import { AddButton, AddButtonStyled, RemoveButtonStyled, ResetButton, resetButton } from 'assets/styles/globalStyled';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import UploadField from 'custom-fields/UploadField';
+import { profileSchema } from 'yup/profileSchema';
+import { checkChangeValue, saveAble } from 'utils/common';
 
 Profile.propTypes = {
 
@@ -61,27 +63,48 @@ function Profile(props) {
 
     const { isVisible, setIsVisible } = props;
 
-    const { control, handleSubmit } = useForm();
+    const defaultValues = React.useMemo(() => ({
+        avatar: ['https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/avatar-s-11.14cf1734.jpg'],
+        name: 'linh',
+        address: 'xuan hoa',
+        phone: '0387746557',
+        email: 'vietlinh@gmail.com',
+    }), []);
+
+    const { control, handleSubmit, reset, formState } = useForm({ resolver: yupResolver(profileSchema), defaultValues });
 
     const [currentAvatar, setCurrentAvatar] = React.useState("https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/avatar-s-11.14cf1734.jpg");
+
+    const [form] = Form.useForm();
 
     const handleReadFile = url => {
         setCurrentAvatar(url);
     }
 
+    const onReset = () => {
+        //handle reset of react hook form
+        reset();
+        //handle reset avatar
+        setCurrentAvatar(defaultValues.avatar[0])
+        //handle reset of form antd
+        form.resetFields();
+    }
+
     const onSubmit = values => {
-        alert(JSON.stringify(values));
+        // alert(JSON.stringify(values));
     }
     return (
         <div>
             <Modal
                 width={700}
                 title="Account Settings"
-                visible={true}
+                visible={false}
                 footer={false}
-                onCancel={() => setIsVisible(false)}
+                // onCancel={() => setIsVisible(false)}
                 bodyStyle={{ padding: '2rem 3rem' }}>
                 <Form
+                    initialValues={defaultValues}
+                    form={form}
                     onFinish={handleSubmit(onSubmit)}
                     layout="vertical">
                     <TopProfile>
@@ -126,9 +149,16 @@ function Profile(props) {
                     </Row>
                     <AddButton
                         htmlType="submit"
+                        disabled={(Object.keys(formState.touchedFields).length < 1) && (defaultValues.avatar[0] === currentAvatar)}
                         icon={<SaveOutlined />}>
                         Save changes
                     </AddButton>
+                    <ResetButton
+                        onClick={onReset}
+                        disabled={(Object.keys(formState.touchedFields).length < 1) && (defaultValues.avatar[0] === currentAvatar)}
+                        icon={<UndoOutlined />}>
+                        Reset
+                    </ResetButton>
                 </Form>
             </Modal>
         </div>

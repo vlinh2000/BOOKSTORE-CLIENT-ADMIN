@@ -85,6 +85,20 @@ const AddButton = styled(Button)`
   }
 `;
 
+const ResetButton = styled(Button)`
+   margin-top:1rem;
+   background:#ff9f43!important;
+   box-shadow:1px 1px 10px 0px #BBB;
+   border-color:#ff9f43;
+   color:#FFF;
+   margin-left:1rem;
+   
+   &:hover{
+       color:#FFF;
+       border-color:#7367f0;
+  }
+`;
+
 const FormItemStyled = styled(Form.Item)`
     margin-bottom:20px;
 
@@ -97,4 +111,4 @@ const FormItemStyled = styled(Form.Item)`
     }
 `;
 
-export { Wrapper, TopStyled, TitleStyled, AddButtonStyled, RemoveButtonStyled, EditButtonStyled, AddButton, FormItemStyled }
+export { Wrapper, TopStyled, TitleStyled, AddButtonStyled, RemoveButtonStyled, EditButtonStyled, AddButton, FormItemStyled, ResetButton }
