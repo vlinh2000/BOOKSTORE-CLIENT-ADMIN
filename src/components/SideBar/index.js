@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Menu } from 'antd';
 import { DashboardOutlined, ReadOutlined, ShopOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
 import { LOGO } from '../../constants/Global';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch, useLocation } from 'react-router-dom';
 
 SideBar.propTypes = {
 
@@ -57,9 +57,14 @@ const LinkStyled = styled(Link)`
 `;
 
 function SideBar(props) {
+
+    const match = useRouteMatch();
+
+    const location = useLocation()
+
     return (
         <SideBarStyled>
-            <Link to="/dashboard">
+            <Link to="/home/dashboard">
                 <LogoStyled>
                     <img
                         width="100px"
@@ -68,29 +73,40 @@ function SideBar(props) {
                         alt="logo" />
                 </LogoStyled>
             </Link>
-            <MenuStyled>
+            <MenuStyled
+                selectedKeys={location.pathname.split("/").pop()}
+            >
                 <MenuItemStyled
+                    key="dashboard"
                     icon={<DashboardOutlined />}>
                     <LinkStyled to="/home/dashboard">
                         Dashboard
                     </LinkStyled>
                 </MenuItemStyled>
-                <MenuItemStyled icon={<ReadOutlined />}>
+                <MenuItemStyled
+                    key="product"
+                    icon={<ReadOutlined />}>
                     <LinkStyled to="/home/product">
                         Product
                     </LinkStyled>
                 </MenuItemStyled>
-                <MenuItemStyled icon={<ShopOutlined />}>
+                <MenuItemStyled
+                    key="category"
+                    icon={<ShopOutlined />}>
                     <LinkStyled to="/home/category">
                         Category
                     </LinkStyled>
                 </MenuItemStyled>
-                <MenuItemStyled icon={<WalletOutlined />}>
+                <MenuItemStyled
+                    key="bill"
+                    icon={<WalletOutlined />}>
                     <LinkStyled to="/home/bill">
                         Bill
                     </LinkStyled>
                 </MenuItemStyled>
-                <MenuItemStyled icon={<UserOutlined />}>
+                <MenuItemStyled
+                    key="user"
+                    icon={<UserOutlined />}>
                     <LinkStyled to="/home/user">
                         User
                     </LinkStyled>

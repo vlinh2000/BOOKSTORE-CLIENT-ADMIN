@@ -11,6 +11,8 @@ import styled from 'styled-components';
 import UploadField from 'custom-fields/UploadField';
 import { profileSchema } from 'yup/profileSchema';
 import { checkChangeValue, saveAble } from 'utils/common';
+import { useDispatch, useSelector } from 'react-redux';
+import { switchProfile } from 'features/Home/homeSlice';
 
 Profile.propTypes = {
 
@@ -61,7 +63,9 @@ const UploadStyled = styled.div`
 
 function Profile(props) {
 
-    const { isVisible, setIsVisible } = props;
+    const { isVisibleProfile } = useSelector(state => state.home);
+
+    const dispatch = useDispatch();
 
     const defaultValues = React.useMemo(() => ({
         avatar: ['https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/avatar-s-11.14cf1734.jpg'],
@@ -98,9 +102,9 @@ function Profile(props) {
             <Modal
                 width={700}
                 title="Account Settings"
-                visible={false}
+                visible={isVisibleProfile}
                 footer={false}
-                // onCancel={() => setIsVisible(false)}
+                onCancel={() => dispatch(switchProfile(false))}
                 bodyStyle={{ padding: '2rem 3rem' }}>
                 <Form
                     initialValues={defaultValues}

@@ -6,19 +6,24 @@ const initialState = {
     products: [],
     category: [],
     bills: [],
-    users: []
+    users: [],
+    isVisibleProfile: false
 
 }
 
 const home = createSlice({
     name: 'home',
     initialState,
-    reducers: {},
+    reducers: {
+        switchProfile: (state, action) => {
+            state.isVisibleProfile = action.payload
+        }
+    },
     extraReducers: {}
 });
 
 
 const { actions, reducer } = home;
 
-export const { } = actions;
+export const { switchProfile } = actions;
 export default reducer;

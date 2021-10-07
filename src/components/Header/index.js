@@ -6,6 +6,8 @@ import styled from 'styled-components';
 
 import { BellOutlined, BookOutlined, LogoutOutlined, NotificationOutlined, ReadOutlined, SearchOutlined, ShopOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom';
+import { switchProfile } from 'features/Home/homeSlice';
+import { useDispatch } from 'react-redux';
 
 const HeaderStyled = styled.div`
     display:flex;
@@ -56,10 +58,24 @@ Header.propTypes = {
 
 
 function Header(props) {
+
+    const dispatch = useDispatch();
+
+    const [isVisible, setIsVisible] = React.useState(false);
+
+    const handleVisibleChange = visible => {
+        setIsVisible(visible);
+    };
+
+    const handleOpenProfile = () => {
+        setIsVisible(false);
+        dispatch(switchProfile(true));
+    }
+
     return (
         <HeaderStyled>
             <div>
-                <Link to="/product">
+                <Link to="/home/product">
                     <Tooltip title="Product">
                         <ButtonStyled
                             size="large"
@@ -68,7 +84,7 @@ function Header(props) {
                             icon={<ReadOutlined />} />
                     </Tooltip>
                 </Link>
-                <Link to="/category">
+                <Link to="/home/category">
                     <Tooltip title="Category">
                         <ButtonStyled
                             size="large"
@@ -77,7 +93,7 @@ function Header(props) {
                             icon={<ShopOutlined />} />
                     </Tooltip>
                 </Link>
-                <Link to="/bill">
+                <Link to="/home/bill">
                     <Tooltip title="Bill">
                         <ButtonStyled
                             size="large"
@@ -111,6 +127,7 @@ function Header(props) {
                         <ModalUserInfo>
                             <div>
                                 <Button
+                                    onClick={handleOpenProfile}
                                     style={{ textAlign: 'start' }}
                                     type="text"
                                     icon={<UserOutlined />}>
@@ -125,6 +142,8 @@ function Header(props) {
                             </Button>
                         </ModalUserInfo>
                     }
+                    visible={isVisible}
+                    onVisibleChange={handleVisibleChange}
                     trigger="click" >
 
                     <UserInfo>
