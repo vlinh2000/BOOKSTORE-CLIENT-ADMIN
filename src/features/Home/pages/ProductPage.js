@@ -4,6 +4,7 @@ import { Button, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
 import AddProduct from '../Components/Modals/AddProduct';
+import { useSelector } from 'react-redux';
 
 ProductPage.propTypes = {
 
@@ -14,30 +15,32 @@ function ProductPage(props) {
 
     const [isVisible, setIsVisible] = React.useState(false);
 
+    const { products } = useSelector(state => state.home);
+
+    const [selectedRow, setSelectedRow] = React.useState([]);
+
+    const filters = React.useMemo(() => {
+        return products.map(product => ({ text: product.name, value: product.name }));
+    }, [products])
 
     const columns = [
-        { title: '#', dataIndex: '_id', key: '_id' },
-        { title: 'Image', dataIndex: 'image', key: 'image' },
+        { title: '#', dataIndex: 'index', key: 'index' },
         {
-            title: 'Name', dataIndex: 'name', key: 'name', filters: [
-                {
-                    text: 'Joe',
-                    value: 'Joe',
-                },
-                {
-                    text: 'Jim',
-                    value: 'Jim',
-                }
-            ], onFilter: (value, record) => record.name.indexOf(value) === 0,
+            title: 'Image', dataIndex: 'image', key: 'image',
+            render: (text) => <><img src={text} alt="book" width="40px" height="50px" /> </>
+        },
+        {
+            title: 'Name', dataIndex: 'name', key: 'name', filters, onFilter: (value, record) => record.name.indexOf(value) === 0,
         },
         { title: 'Author ', dataIndex: 'author', key: 'author' },
         { title: 'Category', dataIndex: 'category', key: 'category' },
         { title: 'Stock quantity', dataIndex: 'stockQuantity', key: 'stockQuantity', sorter: (a, b) => a - b },
-        { title: 'Price', dataIndex: 'Price', key: 'Price', sorter: (a, b) => a - b },
+        { title: 'Price', dataIndex: 'price', key: 'price', sorter: (a, b) => a - b },
         {
-            title: <SettingOutlined />, key: 'action', render: () => <>
+            title: <SettingOutlined />, key: 'action', render: (text, record, index) => <>
                 <Tooltip title="Edit">
                     <EditButtonStyled
+                        onClick={() => alert(JSON.stringify({ text, record, index }))}
                         shape="circle"
                         icon={<EditOutlined />} />
                 </Tooltip>
@@ -45,24 +48,26 @@ function ProductPage(props) {
         },
     ];
 
-    const data = [
-        { key: 0, name: "Trương Việt Linh", phone: "0387746557", status: "" },
-        { key: 1, name: "Trương Việt Linh", phone: "0387746557", status: "" },
-        { key: 2, name: "Trương Việt Linh", phone: "0387746557", status: "" },
-        { key: 3, name: "Trương Việt Linh", phone: "0387746557", status: "" },
-        { key: 4, name: "Trương Việt Linh", phone: "0387746557", status: "" },
+    const data = React.useMemo(() => products.map((product, index) => {
 
-    ];
+        return {
+            key: product._id, index: index + 1, image: product.image[0],
+            name: product.name, author: product.author, category: product.categoryId,
+            stockQuantity: product.stockQuantity, price: product.price
+        }
+    }), [products])
+
 
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        },
-        getCheckboxProps: (record) => ({
-            disabled: record.name === 'Disabled User',
-            // Column configuration not to be checked
-            name: record.name,
-        }),
+            setSelectedRow(selectedRows);
+
+        }    // },
+        // getCheckboxProps: (record) => ({
+        //     disabled: record.name === 'Disabled User',
+        //     // Column configuration not to be checked
+        //     name: record.name,
+        // }),
     };
 
     return (
@@ -79,12 +84,14 @@ function ProductPage(props) {
                     </Tooltip>
                     <Tooltip title="Remove these products">
                         <Popconfirm
+                            disabled={selectedRow.length < 1}
                             title="Are you sure?"
                             okText="Yes"
                             cancelText="No">
 
                             <RemoveButtonStyled
                                 danger
+                                disabled={selectedRow.length < 1}
                                 shape="circle"
                                 icon={<DeleteOutlined />} />
                         </Popconfirm>
@@ -95,7 +102,7 @@ function ProductPage(props) {
             <Table
                 bordered
                 rowSelection={rowSelection}
-                pagination={{ defaultPageSize: 6 }}
+                pagination={{ defaultPageSize: 4 }}
                 columns={columns}
                 dataSource={data}
             />

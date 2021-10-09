@@ -4,6 +4,7 @@ import { Button, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
 import AddCategory from '../Components/Modals/AddCategory';
+import { useSelector } from 'react-redux';
 
 CategoryPage.propTypes = {
 
@@ -14,12 +15,13 @@ function CategoryPage(props) {
 
     const [isVisible, setIsVisible] = React.useState(false);
 
+    const { categories } = useSelector(state => state.home)
 
     const columns = [
-        { title: '#', dataIndex: '_id', key: '_id' },
+        { title: '#', dataIndex: 'index', key: 'index' },
         { title: 'Name', dataIndex: 'name', key: 'name' },
         {
-            title: <SettingOutlined />, key: 'action', render: () => <>
+            title: <SettingOutlined />, key: 'action', render: (text, record) => <>
                 <Tooltip title="Edit">
                     <EditButtonStyled
                         shape="circle"
@@ -29,15 +31,7 @@ function CategoryPage(props) {
         },
     ];
 
-    const data = [
-        { key: 0, name: "Trương Việt Linh", },
-        { key: 1, name: "Trương Việt Linh", },
-        { key: 2, name: "Trương Việt Linh", },
-        { key: 3, name: "Trương Việt Linh", },
-        { key: 4, name: "Trương Việt Linh", },
-
-    ];
-
+    const data = React.useMemo(() => categories.map((category, index) => ({ key: category._id, index: index + 1, name: category.categoryName })), [categories]);
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);

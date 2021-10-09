@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Wrapper } from 'assets/styles/globalStyled';
 import styled from 'styled-components';
 import { LOGO } from 'constants/Global';
@@ -9,10 +8,11 @@ import InputField from 'custom-fields/InputField';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema, defaultValues } from 'yup/loginSchema';
+import { getMe, login } from 'features/Authentication/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { toastError, toastSuccess } from 'utils/common';
+import { history } from 'App';
 
-Login.propTypes = {
-
-};
 
 const LoginStyled = styled.div`
     width:400px;
@@ -29,12 +29,14 @@ const ButtonStyled = styled(Button)`
     border-radius:4px;
     margin-top:2rem;
     
-    &:hover{
+    &:hover,&:focus{
         color:#EEE;
         background-color:#7367f0;
         border-color:#7367f0;
         box-shadow:1px 8px 25px -8px #7367f0;
     }
+
+
 `;
 
 const HeaderLoginStyled = styled.div`
@@ -58,8 +60,26 @@ const HeaderLoginStyled = styled.div`
 function Login(props) {
     const { handleSubmit, control } = useForm({ resolver: yupResolver(loginSchema), defaultValues });
 
+    const { isLoading } = useSelector(state => state.auth);
+
+    const dispatch = useDispatch();
+
     const onSubmit = values => {
-        console.log(values)
+
+        const handleLogin = async () => {
+
+            const { error, payload: { message } } = await dispatch(login(values));
+
+            if (error) {
+                toastError(message);
+                return;
+            }
+
+            await dispatch(getMe());
+            history.push("/");
+            toastSuccess("Welcome back !", "HI");
+        }
+        handleLogin();
     }
 
     return (
@@ -85,6 +105,7 @@ function Login(props) {
                         type="password"
                     />
                     <ButtonStyled
+                        loading={isLoading}
                         block
                         htmlType="submit">Sign in</ButtonStyled>
                 </Form>

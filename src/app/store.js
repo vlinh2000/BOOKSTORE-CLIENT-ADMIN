@@ -8,7 +8,8 @@ import authReducer from 'features/Authentication/authSlice';
 
 const persistAuthConfig = {
     key: 'auth',
-    storage
+    storage,
+    blacklist: ["isLoading"]
 }
 
 const rootReducter = combineReducers({

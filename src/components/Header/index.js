@@ -8,6 +8,7 @@ import { BellOutlined, BookOutlined, LogoutOutlined, NotificationOutlined, ReadO
 import { Link } from 'react-router-dom';
 import { switchProfile } from 'features/Home/homeSlice';
 import { useDispatch } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 const HeaderStyled = styled.div`
     display:flex;
