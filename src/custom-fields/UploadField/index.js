@@ -31,7 +31,10 @@ const UploadStyled = styled(Upload)`
 `;
 
 function UploadField(props) {
-    const { name, label, control, maxCount, handleReadFile, listType } = props;
+    const { name, label, control, maxCount, handleReadFile, listType, options } = props;
+
+    const [listFile, setListFile] = React.useState([]);
+
 
     const beforeUpload = (file) => {
         const isValid = file.type === ('image/png' || 'image/jpeg');
@@ -42,6 +45,11 @@ function UploadField(props) {
 
         return false;
     }
+
+    React.useEffect(() => {
+        const list = options ? options?.map((option, index) => ({ uid: index, name: `Image ${index + 1}`, status: 'done', url: option })) : [];
+        setListFile(list);
+    }, [options]);
 
     return (
         <Controller
@@ -56,7 +64,9 @@ function UploadField(props) {
 
                     if (!isValid) return;
 
+                    setListFile(fileList);
                     field.onChange(fileList);
+                    field.onBlur(true)
 
                     if (handleReadFile) {
 
@@ -71,15 +81,29 @@ function UploadField(props) {
                         readFile(fileList[0]);
                     }
                 }
+
+                const onRemove = item => {
+                    const list = listFile.filter(file => file.uid !== item.uid);
+                    setListFile(list);
+                    field.onChange(list.length > 0 ? list : null)
+                    field.onBlur(true)
+                    console.log({ listRemove: list });
+                }
+
                 return <FormItemStyled
                     validateStatus={errors[field.name] && 'error'}
                     help={errors[field.name]?.message}
                     label={label}>
                     <UploadStyled
+                        onRemove={onRemove}
+                        fileList={listFile}
+                        listType={listType}
                         beforeUpload={beforeUpload}
                         onChange={onChange}
                         maxCount={maxCount}>
-                        <Button icon={<UploadOutlined />} />
+                        <Button
+                            icon={<UploadOutlined />}
+                            type="text" />
                     </UploadStyled>
                 </FormItemStyled>
             }} />);

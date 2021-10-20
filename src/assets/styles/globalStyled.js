@@ -38,7 +38,7 @@ const AddButtonStyled = styled(Button)`
    span{
        color:#FFF;
     }
-    &:hover{
+    &:hover,&:focus{
         span{
             transform:translate(0,-20%);   
         }
@@ -51,7 +51,7 @@ const RemoveButtonStyled = styled(Button)`
    span{
     color:#ea5455;
    }
-   &:hover{
+   &:hover,&:focus{
     span{
      transform:translate(0,-20%);   
     }
@@ -59,12 +59,14 @@ const RemoveButtonStyled = styled(Button)`
 `;
 const EditButtonStyled = styled(Button)`
    border-color:#ff9f43;
+   margin-right:1rem;
+
    box-shadow:1px 1px 10px 0px #EEE;
    span{
        color:#ff9f43;
     }
     
-    &:hover{
+    &:hover,&:focus{
         span{
          transform:translate(0,-20%);   
         }
@@ -79,7 +81,7 @@ const AddButton = styled(Button)`
    border-color:#7367f0;
    color:#FFF;
    
-   &:hover{
+   &:hover,&:focus{
        color:#FFF;
        border-color:#ff9f43;
   }
@@ -93,7 +95,7 @@ const ResetButton = styled(Button)`
    color:#FFF;
    margin-left:1rem;
    
-   &:hover{
+   &:hover,&:focus{
        color:#FFF;
        border-color:#7367f0;
   }

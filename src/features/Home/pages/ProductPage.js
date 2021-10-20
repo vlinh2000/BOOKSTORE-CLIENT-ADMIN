@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Popconfirm, Table, Tooltip } from 'antd';
+import { Button, message, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
 import AddProduct from '../Components/Modals/AddProduct';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { makeDefaultValues } from 'utils/common';
+import { defaultValues } from 'yup/loginSchema';
+import { ProductApi } from 'api/ProductApi';
+import { fetchProducts } from '../homeSlice';
 
 ProductPage.propTypes = {
 
@@ -17,11 +21,42 @@ function ProductPage(props) {
 
     const { products } = useSelector(state => state.home);
 
-    const [selectedRow, setSelectedRow] = React.useState([]);
+    const [isEdit, setIsEdit] = React.useState(false);
+
+    const [currentProductSelected, setCurrentProductSelected] = React.useState(null);
+
+    const dispatch = useDispatch();
 
     const filters = React.useMemo(() => {
         return products.map(product => ({ text: product.name, value: product.name }));
     }, [products])
+
+
+
+    //handle edit product
+    const handleEdit = productId => {
+        const product = products.find(book => book._id === productId);
+        setIsVisible(true);
+        setIsEdit(true);
+        setCurrentProductSelected(product);
+    }
+
+    //handle remove product
+    const handleRemove = async productId => {
+
+        console.log(productId);
+        try {
+            const response = await ProductApi.delete(productId);
+            message.success(response.message);
+            dispatch(fetchProducts());
+
+        } catch (error) {
+            const errMessage = error.response.data;
+            message.error(errMessage.message);
+        }
+
+
+    }
 
     const columns = [
         { title: '#', dataIndex: 'index', key: 'index' },
@@ -34,74 +69,69 @@ function ProductPage(props) {
         },
         { title: 'Author ', dataIndex: 'author', key: 'author' },
         { title: 'Category', dataIndex: 'category', key: 'category' },
-        { title: 'Stock quantity', dataIndex: 'stockQuantity', key: 'stockQuantity', sorter: (a, b) => a - b },
-        { title: 'Price', dataIndex: 'price', key: 'price', sorter: (a, b) => a - b },
+        { title: 'Stock quantity', dataIndex: 'stockQuantity', key: 'stockQuantity', sorter: (a, b) => a.stockQuantity - b.stockQuantity },
+        { title: 'Price', dataIndex: 'price', key: 'price', sorter: (a, b) => a.price - b.price },
         {
             title: <SettingOutlined />, key: 'action', render: (text, record, index) => <>
                 <Tooltip title="Edit">
                     <EditButtonStyled
-                        onClick={() => alert(JSON.stringify({ text, record, index }))}
+                        onClick={() => handleEdit(record.key)}
                         shape="circle"
                         icon={<EditOutlined />} />
+                </Tooltip>
+                <Tooltip title="Remove these products">
+                    <Popconfirm
+                        // disabled={selectedRow.length < 1}
+                        onConfirm={() => handleRemove(record.key)}
+                        title="Are you sure?"
+                        okText="Yes"
+                        cancelText="No">
+
+                        <RemoveButtonStyled
+                            danger
+                            // disabled={selectedRow.length < 1}
+                            shape="circle"
+                            icon={<DeleteOutlined />} />
+                    </Popconfirm>
                 </Tooltip>
             </>
         },
     ];
 
-    const data = React.useMemo(() => products.map((product, index) => {
+    const data = React.useMemo(() => products?.map((product, index) => {
 
         return {
             key: product._id, index: index + 1, image: product.image[0],
-            name: product.name, author: product.author, category: product.categoryId,
+            name: product.name, author: product.author, category: product.category.name,
             stockQuantity: product.stockQuantity, price: product.price
         }
     }), [products])
 
-
-    const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            setSelectedRow(selectedRows);
-
-        }    // },
-        // getCheckboxProps: (record) => ({
-        //     disabled: record.name === 'Disabled User',
-        //     // Column configuration not to be checked
-        //     name: record.name,
-        // }),
-    };
+    //handle when add button clicked
+    const handleAdd = () => {
+        setIsVisible(true)
+        setIsEdit(false)
+    }
 
     return (
         <Wrapper>
-            <AddProduct isVisible={isVisible} setIsVisible={setIsVisible} />
+            <AddProduct
+                isEdit={isEdit}
+                product={currentProductSelected}
+                isVisible={isVisible}
+                setIsVisible={setIsVisible} />
             <TopStyled>
                 <TitleStyled>Products</TitleStyled>
-                <div>
-                    <Tooltip title="Add product">
-                        <AddButtonStyled
-                            onClick={() => setIsVisible(true)}
-                            shape="circle"
-                            icon={<PlusOutlined />} />
-                    </Tooltip>
-                    <Tooltip title="Remove these products">
-                        <Popconfirm
-                            disabled={selectedRow.length < 1}
-                            title="Are you sure?"
-                            okText="Yes"
-                            cancelText="No">
-
-                            <RemoveButtonStyled
-                                danger
-                                disabled={selectedRow.length < 1}
-                                shape="circle"
-                                icon={<DeleteOutlined />} />
-                        </Popconfirm>
-                    </Tooltip>
-                </div>
+                <Tooltip title="Add product">
+                    <AddButtonStyled
+                        onClick={handleAdd}
+                        shape="circle"
+                        icon={<PlusOutlined />} />
+                </Tooltip>
 
             </TopStyled>
             <Table
                 bordered
-                rowSelection={rowSelection}
                 pagination={{ defaultPageSize: 4 }}
                 columns={columns}
                 dataSource={data}

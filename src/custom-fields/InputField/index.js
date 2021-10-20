@@ -38,7 +38,6 @@ function InputField(props) {
             name={name}
             control={control}
             render={({ field, formState: { errors } }) => {
-
                 return < FormItemStyled
                     validateStatus={errors[field.name] && 'error'}
                     help={errors[field.name]?.message}
@@ -48,7 +47,7 @@ function InputField(props) {
                         type === 'textarea' ?
                             <InputStyled.TextArea
                                 {...field}
-                                autoSize={{ minRows: 4, maxRows: 6 }}
+                                autoSize={{ minRows: 8, maxRows: 8 }}
                                 defaultValue={field.value}
                                 allowClear
                                 disabled={disabled}

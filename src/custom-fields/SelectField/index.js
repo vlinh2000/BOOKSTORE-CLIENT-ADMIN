@@ -10,12 +10,14 @@ SelectField.propTypes = {
     name: PropTypes.string,
     label: PropTypes.string,
     options: PropTypes.array,
+    value: PropTypes.string
 };
 
 SelectField.defaultProps = {
     name: '',
     label: '',
     options: [],
+    value: ''
 };
 
 const SelectStyled = styled(Select)`
@@ -26,7 +28,7 @@ const SelectStyled = styled(Select)`
 `;
 
 function SelectField(props) {
-    const { name, label, options, control } = props;
+    const { name, label, options, control, value } = props;
     return (
         <Controller
             name={name}
@@ -35,8 +37,8 @@ function SelectField(props) {
                 validateStatus={errors[field.name] && 'error'}
                 help={errors[field.name]?.message}
                 label={label}>
-                <SelectStyled {...field} placeholder={label} >
-                    {options.map(option => <Select.Option key={option._id} value={option._id}>{option.categoryName}</Select.Option>)}
+                <SelectStyled {...field} placeholder={label} defaultValue={value}>
+                    {options.map(option => <Select.Option key={option._id} value={option._id}>{option.name}</Select.Option>)}
                 </SelectStyled>
             </FormItemStyled>}
         />
