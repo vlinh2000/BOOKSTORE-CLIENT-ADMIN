@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Button, Popconfirm, Table, Tooltip } from 'antd';
+import { Avatar, Button, message, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { UserApi } from 'api/UserApi';
+import { fetchUsers } from '../homeSlice';
 
 UserPage.propTypes = {
 
@@ -12,6 +14,21 @@ UserPage.propTypes = {
 
 function UserPage(props) {
     const { users } = useSelector(state => state.home);
+
+    const { user } = useSelector(state => state.auth?.currentUser)
+
+    const dispatch = useDispatch()
+
+    const handleRemove = async uid => {
+        try {
+            const response = await UserApi.delete(uid);
+            message.success(response.message)
+            dispatch(fetchUsers());
+        } catch (error) {
+            const errMessage = error.response.data;
+            message.error(errMessage.message);
+        }
+    }
 
     const columns = [
         { title: '#', dataIndex: 'index', key: 'index' },
@@ -28,11 +45,21 @@ function UserPage(props) {
         { title: 'Email', dataIndex: 'email', key: 'email' },
         { title: 'Permission', dataIndex: 'permission', key: 'permission' },
         {
-            title: <SettingOutlined />, key: 'action', render: () => <>
-                <Tooltip title="Edit">
-                    <EditButtonStyled
-                        shape="circle"
-                        icon={<EditOutlined />} />
+            title: <SettingOutlined />, key: 'action', render: (text, record) => <>
+                <Tooltip title="Remove these users">
+                    <Popconfirm
+                        disabled={record.key === user._id}
+                        onConfirm={() => handleRemove(record.key)}
+                        title="Are you sure?"
+                        okText="Yes"
+                        cancelText="No">
+
+                        <RemoveButtonStyled
+                            disabled={record.key === user._id}
+                            danger
+                            shape="circle"
+                            icon={<DeleteOutlined />} />
+                    </Popconfirm>
                 </Tooltip>
             </>
         },
@@ -46,40 +73,17 @@ function UserPage(props) {
         }
     )), [users]);
 
-    const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        },
-        getCheckboxProps: (record) => ({
-            disabled: record.name === 'Disabled User',
-            // Column configuration not to be checked
-            name: record.name,
-        }),
-    };
+
+
 
     return (
         <Wrapper>
             <TopStyled>
                 <TitleStyled>Users</TitleStyled>
-                <div>
-                    <Tooltip title="Remove these users">
-                        <Popconfirm
-                            title="Are you sure?"
-                            okText="Yes"
-                            cancelText="No">
-
-                            <RemoveButtonStyled
-                                danger
-                                shape="circle"
-                                icon={<DeleteOutlined />} />
-                        </Popconfirm>
-                    </Tooltip>
-                </div>
 
             </TopStyled>
             <Table
                 bordered
-                rowSelection={rowSelection}
                 pagination={{ defaultPageSize: 5 }}
                 columns={columns}
                 dataSource={data}

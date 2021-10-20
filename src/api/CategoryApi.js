@@ -6,12 +6,36 @@ export const CategoryApi = {
         return axiosClient.get(endpoint);
     },
     post: (data) => {
-        const endpoint = `/categories`;
-        return axiosClient.post(endpoint, data);
+
+        return new Promise((resolve, reject) => {
+
+            setTimeout(async () => {
+                try {
+                    const endpoint = `/categories`;
+                    const response = await axiosClient.post(endpoint, data);
+                    resolve(response);
+                } catch (error) {
+                    reject(error)
+                }
+            }, 2000)
+
+        })
+
     },
-    update: (params) => {
-        const endpoint = `/categories/${params}`;
-        return axiosClient.update(endpoint);
+    update: (params, data) => {
+        return new Promise((resolve, reject) => {
+
+            setTimeout(async () => {
+                try {
+                    const endpoint = `/categories/${params}`;
+                    const response = await axiosClient.patch(endpoint, data);
+                    resolve(response);
+                } catch (error) {
+                    reject(error)
+                }
+            }, 2000)
+
+        })
     },
     delete: (params) => {
         const endpoint = `/categories/${params}`;

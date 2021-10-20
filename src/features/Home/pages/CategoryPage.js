@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Popconfirm, Table, Tooltip } from 'antd';
+import { Button, message, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
 import AddCategory from '../Components/Modals/AddCategory';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { CategoryApi } from 'api/CategoryApi';
+import { fetchCategories } from '../homeSlice';
 
 CategoryPage.propTypes = {
 
@@ -15,7 +17,38 @@ function CategoryPage(props) {
 
     const [isVisible, setIsVisible] = React.useState(false);
 
+    const [isEdit, setIsEdit] = React.useState(false);
+
     const { categories } = useSelector(state => state.home)
+
+    const [categorySelected, setCategorySelected] = React.useState({});
+
+    const dispatch = useDispatch()
+
+    const handleEdit = categoryId => {
+        const category = categories.find(cate => cate._id === categoryId);
+        setCategorySelected(category);
+        setIsVisible(true);
+        setIsEdit(true);
+    }
+
+    const handleRemove = async categoryId => {
+
+        try {
+            const response = await CategoryApi.delete(categoryId);
+            message.success(response.message)
+            dispatch(fetchCategories());
+        } catch (error) {
+            const errMessage = error.response.data;
+            message.error(errMessage.message);
+        }
+
+    }
+
+    const onAdd = () => {
+        setIsEdit(false);
+        setIsVisible(true);
+    }
 
     const columns = [
         { title: '#', dataIndex: 'index', key: 'index' },
@@ -24,56 +57,52 @@ function CategoryPage(props) {
             title: <SettingOutlined />, key: 'action', render: (text, record) => <>
                 <Tooltip title="Edit">
                     <EditButtonStyled
+                        onClick={() => handleEdit(record.key)}
                         shape="circle"
                         icon={<EditOutlined />} />
+                </Tooltip>
+                <Tooltip
+                    title="Remove these products">
+                    <Popconfirm
+
+                        onConfirm={() => handleRemove(record.key)}
+                        title="Are you sure?"
+                        okText="Yes"
+                        cancelText="No">
+
+                        <RemoveButtonStyled
+                            danger
+                            shape="circle"
+                            icon={<DeleteOutlined />} />
+                    </Popconfirm>
                 </Tooltip>
             </>
         },
     ];
 
-    const data = React.useMemo(() => categories.map((category, index) => ({ key: category._id, index: index + 1, name: category.categoryName })), [categories]);
-    const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        },
-        getCheckboxProps: (record) => ({
-            disabled: record.name === 'Disabled User',
-            // Column configuration not to be checked
-            name: record.name,
-        }),
-    };
+    const data = React.useMemo(() => categories.map((category, index) => ({ key: category._id, index: index + 1, name: category.name })), [categories]);
 
     return (
         <Wrapper>
-            <AddCategory isVisible={isVisible} setIsVisible={setIsVisible} />
+            <AddCategory
+                isEdit={isEdit}
+                category={categorySelected}
+                isVisible={isVisible}
+                setIsVisible={setIsVisible} />
             <TopStyled>
                 <TitleStyled>Categories</TitleStyled>
-                <div>
-                    <Tooltip title="Add product">
-                        <AddButtonStyled
-                            onClick={() => setIsVisible(true)}
-                            shape="circle"
-                            icon={<PlusOutlined />} />
-                    </Tooltip>
-                    <Tooltip title="Remove these products">
-                        <Popconfirm
-                            title="Are you sure?"
-                            okText="Yes"
-                            cancelText="No">
+                <Tooltip title="Add product">
+                    <AddButtonStyled
+                        onClick={onAdd}
+                        shape="circle"
+                        icon={<PlusOutlined />} />
+                </Tooltip>
 
-                            <RemoveButtonStyled
-                                danger
-                                shape="circle"
-                                icon={<DeleteOutlined />} />
-                        </Popconfirm>
-                    </Tooltip>
-                </div>
 
             </TopStyled>
             <Table
                 bordered
-                rowSelection={rowSelection}
-                pagination={{ defaultPageSize: 6 }}
+                pagination={{ defaultPageSize: 5 }}
                 columns={columns}
                 dataSource={data}
             />

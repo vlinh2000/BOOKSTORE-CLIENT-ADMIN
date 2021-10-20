@@ -21,9 +21,9 @@ export const UserApi = {
     //     const endpoint = `/user`;
     //     return axiosClient.post(endpoint, data);
     // },
-    update: (params) => {
+    update: (params, data) => {
         const endpoint = `/user/${params}`;
-        return axiosClient.update(endpoint);
+        return axiosClient.patch(endpoint, data);
     },
     delete: (params) => {
         const endpoint = `/user/${params}`;
