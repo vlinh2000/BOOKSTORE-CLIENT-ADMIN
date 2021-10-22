@@ -47,15 +47,16 @@ const EyeIconStyled = styled(EyeOutlined)`
 
 function BillConfirm(props) {
 
-    const { orders } = useSelector(state => state.home);
+    const { orders } = props;
 
     const [orderSelected, setOrderSelected] = React.useState({});
 
-    const [isVisilble, setIsVisible] = React.useState(false);
+    const [isVisible, setIsVisible] = React.useState(false);
 
     const handleCheckOrder = orderId => {
         const order = orders.find(order => order._id === orderId);
         setOrderSelected(order);
+        setIsVisible(true)
     }
 
     const columns = [
@@ -78,7 +79,11 @@ function BillConfirm(props) {
 
     return (
         <div>
-            <ComfirmOrder />
+            <ComfirmOrder
+                order={orderSelected}
+                isVisible={isVisible}
+                setIsVisible={setIsVisible}
+            />
             <TableStyled
                 columns={columns}
                 dataSource={data}

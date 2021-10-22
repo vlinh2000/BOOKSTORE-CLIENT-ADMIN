@@ -107,7 +107,7 @@ function Header(props) {
 
             </div>
             <MenuRightStyled>
-
+        
                 <PopoverStyled
                     content={
                         <ModalUserInfo>

@@ -86,7 +86,8 @@ const PriceStyled = styled.span`
    margin-right:3rem;
 `;
 function DashboardPage(props) {
-    const { users, bills, products } = useSelector(state => state.home);
+    const { users, bills, products, orders } = useSelector(state => state.home);
+
 
     return (
         <div>
@@ -101,7 +102,7 @@ function DashboardPage(props) {
                                 type="text"
                                 icon={
                                     <Badge
-                                        dot
+                                        dot={orders.length > 0}
                                         size="small">
                                         <BellOutlined style={{ fontSize: 13 }} />
                                     </Badge>
@@ -109,7 +110,7 @@ function DashboardPage(props) {
                             </Button>
                         </TopStyled>
                         <div>
-                            <BillConfirm />
+                            <BillConfirm orders={orders} />
                         </div>
                     </Wrapper>
 

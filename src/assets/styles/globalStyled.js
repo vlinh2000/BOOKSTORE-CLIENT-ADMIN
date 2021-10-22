@@ -88,6 +88,19 @@ const AddButton = styled(Button)`
        border-color:#ff9f43;
   }
 `;
+const CancelButton = styled(Button)`
+   margin-top:1rem;
+   margin-right:1rem;
+   background:#ea5455!important;
+   box-shadow:1px 1px 10px 0px #BBB;
+   border-color:#ea5455;
+   color:#FFF;
+   
+   &:hover,&:focus{
+       color:#FFF;
+       border-color:#7367f0;
+  }
+`;
 
 const ResetButton = styled(Button)`
    margin-top:1rem;
@@ -118,9 +131,10 @@ const FormItemStyled = styled(Form.Item)`
 
 const DolarIconStyled = styled(DollarOutlined)`
     color:#ff9f43;
+    font-size:10px;
 `;
 export {
     Wrapper, TopStyled, TitleStyled, AddButtonStyled,
     RemoveButtonStyled, EditButtonStyled, AddButton,
-    FormItemStyled, ResetButton, DolarIconStyled
+    FormItemStyled, ResetButton, DolarIconStyled, CancelButton
 }

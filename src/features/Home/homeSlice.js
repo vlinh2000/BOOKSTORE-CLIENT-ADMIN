@@ -104,8 +104,8 @@ const home = createSlice({
             state.isLoading = true;
         },
         [fetchBills.fulfilled]: (state, action) => {
-            const bills = action.payload.filter(bill => bill.status !== "pending");
-            const orders = action.payload.filter(bill => bill.status === "pending");
+            const bills = action.payload.filter(bill => bill.status !== "Pending" && bill.status !== "Canceled");
+            const orders = action.payload.filter(bill => bill.status === "Pending");
 
             state.isLoading = false;
             state.bills = bills;
