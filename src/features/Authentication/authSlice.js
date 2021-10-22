@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { message } from 'antd';
 import { UserApi } from 'api/UserApi'
 
 export const getMe = createAsyncThunk("authentication/getMe", async (data, { fulfillWithValue, rejectWithValue }) => {
@@ -16,8 +17,8 @@ export const getMe = createAsyncThunk("authentication/getMe", async (data, { ful
 export const login = createAsyncThunk("authentication/login", async (data, { fulfillWithValue, rejectWithValue, dispatch }) => {
 
     try {
-        const { token, refreshtoken } = await UserApi.post_login(data);
-        return fulfillWithValue({ token, refreshtoken });
+        const { token, refreshToken } = await UserApi.post_login(data);
+        return fulfillWithValue({ token, refreshToken });
 
     } catch (error) {
         return rejectWithValue(error.response.data);
@@ -48,6 +49,7 @@ const auth = createSlice({
             state.isLoading = true;
         },
         [getMe.fulfilled]: (state, action) => {
+
             state.isLoading = false;
             state.currentUser.user = action.payload;
         },

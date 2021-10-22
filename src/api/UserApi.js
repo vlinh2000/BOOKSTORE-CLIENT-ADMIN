@@ -6,14 +6,6 @@ export const UserApi = {
         return axiosClient.get(endpoint);
     },
     get: () => {
-        // {
-        //     name: response.name,
-        //     userName: response.userName,
-        //     _id: response._id,
-        //     address: response.address,
-        //     email: response.email,
-        //     phoneNumber: response.phoneNumber
-        // }
         const endpoint = `/user`;
         return axiosClient.get(endpoint);
     },

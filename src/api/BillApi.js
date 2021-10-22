@@ -9,9 +9,9 @@ export const BillApi = {
         const endpoint = `/bills`;
         return axiosClient.post(endpoint, data);
     },
-    update: (params) => {
+    update: (params, data) => {
         const endpoint = `/bills/${params}`;
-        return axiosClient.update(endpoint);
+        return axiosClient.patch(endpoint, data);
     },
     delete: (params) => {
         const endpoint = `/bills/${params}`;

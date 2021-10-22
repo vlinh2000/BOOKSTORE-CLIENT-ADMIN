@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 export const getToken = () => {
     try {
         const { currentUser } = JSON.parse(localStorage.getItem("persist:auth"));
+        console.log(currentUser);
         const { auth: { token } } = JSON.parse(currentUser);
         return token;
     } catch (error) {
@@ -25,4 +26,11 @@ export const toastSuccess = (message, action) => {
 
 export const toastError = message => {
     toast.error(message, { ...TOAST_CONFIG, icon: () => <img width="25px" height="25px" alt="error" src={ICON_ERR} /> });
+}
+
+
+//handle revenue
+
+export const revenue = (bills) => {
+    return bills.reduce((sum, bill) => sum + bill.totalPrice, 0);
 }

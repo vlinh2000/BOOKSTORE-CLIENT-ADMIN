@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Form, Avatar, Col, Row } from 'antd';
+import { Modal, Form, Avatar, Col, Row, message } from 'antd';
 import { useForm } from 'react-hook-form';
 import InputField from '../../../../custom-fields/InputField';
 import { PlusSquareOutlined, SaveOutlined, UndoOutlined, UploadOutlined } from '@ant-design/icons';
@@ -13,6 +13,8 @@ import { profileSchema } from 'yup/profileSchema';
 import { checkChangeValue, saveAble } from 'utils/common';
 import { useDispatch, useSelector } from 'react-redux';
 import { switchProfile } from 'features/Home/homeSlice';
+import { UserApi } from 'api/UserApi';
+import { getMe } from 'features/Authentication/authSlice';
 
 Profile.propTypes = {
 
@@ -65,19 +67,21 @@ function Profile(props) {
 
     const { isVisibleProfile } = useSelector(state => state.home);
 
+    const { user } = useSelector(state => state.auth.currentUser);
+
     const dispatch = useDispatch();
 
     const defaultValues = React.useMemo(() => ({
-        avatar: ['https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/avatar-s-11.14cf1734.jpg'],
-        name: 'linh',
-        address: 'xuan hoa',
-        phone: '0387746557',
-        email: 'vietlinh@gmail.com',
-    }), []);
+        avatar: user.avatar ? [user.avatar] : [],
+        name: user.name,
+        address: user.address,
+        phone: user.phoneNumber,
+        email: user.email,
+    }), [user]);
 
-    const { control, handleSubmit, reset, formState } = useForm({ resolver: yupResolver(profileSchema), defaultValues });
+    const { control, handleSubmit, reset, formState: { touchedFields } } = useForm({ resolver: yupResolver(profileSchema), defaultValues });
 
-    const [currentAvatar, setCurrentAvatar] = React.useState("https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/avatar-s-11.14cf1734.jpg");
+    const [currentAvatar, setCurrentAvatar] = React.useState(() => defaultValues.avatar[0]);
 
     const [form] = Form.useForm();
 
@@ -95,7 +99,40 @@ function Profile(props) {
     }
 
     const onSubmit = values => {
+
         // alert(JSON.stringify(values));
+        // return;
+        const fieldUpdate = [];
+
+        for (let key in touchedFields) {
+            if (key !== undefined) fieldUpdate.push(key);
+        }
+
+        const formData = new FormData();
+
+        //handle  field
+        fieldUpdate.forEach(field => {
+            formData.append(field, typeof values[field] !== "string" ? values[field][0].originFileObj : values[field])
+        })
+
+        const onPost = async (data) => {
+            try {
+                const response = await UserApi.update(user._id, data);
+                message.success(response.message);
+                dispatch(switchProfile(false));
+                dispatch(getMe());
+            } catch (error) {
+                const errorMessage = error.response.data;
+                message.error(errorMessage.message)
+            }
+        }
+
+        onPost(formData);
+    }
+
+    const onCancel = () => {
+        dispatch(switchProfile(false));
+        onReset();
     }
     return (
         <div>
@@ -104,7 +141,7 @@ function Profile(props) {
                 title="Account Settings"
                 visible={isVisibleProfile}
                 footer={false}
-                onCancel={() => dispatch(switchProfile(false))}
+                onCancel={onCancel}
                 bodyStyle={{ padding: '2rem 3rem' }}>
                 <Form
                     initialValues={defaultValues}
@@ -153,19 +190,19 @@ function Profile(props) {
                     </Row>
                     <AddButton
                         htmlType="submit"
-                        disabled={(Object.keys(formState.touchedFields).length < 1) && (defaultValues.avatar[0] === currentAvatar)}
+                        disabled={(Object.keys(touchedFields).length < 1)}
                         icon={<SaveOutlined />}>
                         Save changes
                     </AddButton>
                     <ResetButton
                         onClick={onReset}
-                        disabled={(Object.keys(formState.touchedFields).length < 1) && (defaultValues.avatar[0] === currentAvatar)}
+                        disabled={(Object.keys(touchedFields).length < 1)}
                         icon={<UndoOutlined />}>
                         Reset
                     </ResetButton>
                 </Form>
             </Modal>
-        </div>
+        </div >
     );
 }
 

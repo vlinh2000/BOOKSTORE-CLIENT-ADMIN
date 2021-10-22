@@ -3,7 +3,7 @@ import { Wrapper } from 'assets/styles/globalStyled';
 import styled from 'styled-components';
 import { LOGO } from 'constants/Global';
 
-import { Button, Form } from 'antd'
+import { Button, Form, message } from 'antd'
 import InputField from 'custom-fields/InputField';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -67,17 +67,24 @@ function Login(props) {
     const onSubmit = values => {
 
         const handleLogin = async () => {
-
-            const { error, payload: { message } } = await dispatch(login(values));
+            const { error, payload } = await dispatch(login(values));
 
             if (error) {
-                toastError(message);
+                toastError(payload.message);
                 return;
+            } else {
+
+                //getme 
+                const response = await dispatch(getMe());
+                if (response.error) {
+                    toastError(response.payload.message);
+                    return;
+                }
+
+                history.push("/");
+                toastSuccess("Welcome back !", "HI");
             }
 
-            await dispatch(getMe());
-            history.push("/");
-            toastSuccess("Welcome back !", "HI");
         }
         handleLogin();
     }

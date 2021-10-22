@@ -11,7 +11,7 @@ import CategoryPage from './pages/CategoryPage';
 import UserPage from './pages/UserPage';
 import Profile from './Components/Modals/Profile';
 import { useDispatch } from 'react-redux';
-import { fetchCategories, fetchProducts, fetchUsers } from './homeSlice';
+import { fetchBills, fetchCategories, fetchProducts, fetchUsers } from './homeSlice';
 
 Home.propTypes = {
 
@@ -24,9 +24,9 @@ function Home(props) {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-
         dispatch(fetchProducts());
         dispatch(fetchCategories());
+        dispatch(fetchBills());
         dispatch(fetchUsers());
 
     }, []);

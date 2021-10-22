@@ -45,7 +45,7 @@ function RevenueChart(props) {
                     options={REVENUE_OPTIONS}
                     series={REVENUE_SERIES}
                     type="bar"
-                    height="280px"
+                    height="295px"
                 />
             </div>
 

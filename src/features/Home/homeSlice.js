@@ -12,7 +12,7 @@ export const fetchProducts = createAsyncThunk("home/fetchProducts", async (data,
         return fulfillWithValue(books);
 
     } catch (error) {
-        return rejectWithValue(error.message);
+        return rejectWithValue(error.response.data);
     }
 
 })
@@ -24,7 +24,7 @@ export const fetchCategories = createAsyncThunk("home/fetchCategories", async (d
         return fulfillWithValue(categories);
 
     } catch (error) {
-        return rejectWithValue(error.message);
+        return rejectWithValue(error.response.data);
     }
 
 })
@@ -36,7 +36,7 @@ export const fetchBills = createAsyncThunk("home/fetchBills", async (data, { ful
         return fulfillWithValue(bills);
 
     } catch (error) {
-        return rejectWithValue(error.message);
+        return rejectWithValue(error.response.data);
     }
 
 })
@@ -48,7 +48,7 @@ export const fetchUsers = createAsyncThunk("home/fetchUsers", async (data, { ful
         return fulfillWithValue(users);
 
     } catch (error) {
-        return rejectWithValue(error.message);
+        return rejectWithValue(error.response.data);
     }
 
 })
@@ -58,6 +58,7 @@ const initialState = {
     products: [],
     categories: [],
     bills: [],
+    orders: [],
     users: [],
     error: '',
     isVisibleProfile: false,
@@ -103,8 +104,12 @@ const home = createSlice({
             state.isLoading = true;
         },
         [fetchBills.fulfilled]: (state, action) => {
+            const bills = action.payload.filter(bill => bill.status !== "pending");
+            const orders = action.payload.filter(bill => bill.status === "pending");
+
             state.isLoading = false;
-            state.bills = action.payload;
+            state.bills = bills;
+            state.orders = orders;
         },
         [fetchBills.pending]: (state, action) => {
             state.isLoading = false;

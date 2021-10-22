@@ -1,3 +1,4 @@
+import { DollarOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { Form } from "antd";
 import styled from "styled-components";
@@ -8,7 +9,8 @@ const Wrapper = styled.div`
     border-radius:10px;
     box-shadow:1px 1px 10px 0px #ddd;
     min-height:200px;
-    margin-bottom:2rem;
+    margin-bottom:1rem;
+    position:relative;
 `;
 
 const TopStyled = styled.div`
@@ -113,4 +115,12 @@ const FormItemStyled = styled(Form.Item)`
     }
 `;
 
-export { Wrapper, TopStyled, TitleStyled, AddButtonStyled, RemoveButtonStyled, EditButtonStyled, AddButton, FormItemStyled, ResetButton }
+
+const DolarIconStyled = styled(DollarOutlined)`
+    color:#ff9f43;
+`;
+export {
+    Wrapper, TopStyled, TitleStyled, AddButtonStyled,
+    RemoveButtonStyled, EditButtonStyled, AddButton,
+    FormItemStyled, ResetButton, DolarIconStyled
+}

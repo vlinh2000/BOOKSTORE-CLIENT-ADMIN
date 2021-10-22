@@ -1,27 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Button, Select } from 'antd'
+import { Row, Col, Button, Select, Badge, Tooltip } from 'antd'
 import styled from 'styled-components';
-import { ArrowRightOutlined, DollarCircleFilled, DollarOutlined, ReadOutlined, RightOutlined, RiseOutlined, UserOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, BellOutlined, DollarCircleFilled, DollarOutlined, ReadOutlined, RightOutlined, RiseOutlined, UserOutlined } from '@ant-design/icons';
 
+import { useSelector } from "react-redux"
 
 import Chart from 'react-apexcharts'
 
-import { TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
+import { DolarIconStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
 import { ORDERS_OPTIONS, ORDERS_SERIES } from 'constants/Global';
 import BillConfirm from '../Components/BillConfirm';
 import RevenueChart from '../Components/RevenueChart';
+import { revenue } from 'utils/common';
 DashboardPage.propTypes = {
 
 };
 
-
-
-const EarningStyled = styled.div`
-    display:flex;
-    justify-content:space-between;
-
-`;
 
 const InfoEarningStyled = styled.div`
    color:#969696;
@@ -47,7 +42,6 @@ const ItemStyled = styled.div`
    div{
        font-weight:bold;
        color:#666;
-       font-size:1.1rem;
    }
 `;
 
@@ -64,7 +58,7 @@ const IconStyled = styled.div`
    text-align:center;
    line-height:48px;
    font-size:1.4rem!important;
-   margin-right:1rem;
+   margin-right:0.75rem;
 `;
 
 const WrapperStatistic = styled.div`
@@ -72,39 +66,102 @@ const WrapperStatistic = styled.div`
    justify-content:space-between;
    margin-top:1rem;
 `;
+
+const SellingItemStyled = styled.div`
+   display:flex;
+   align-items:center;
+   justify-content:space-between;
+   color:#969696;
+   margin-bottom:0.5rem;
+   font-size:13px;
+`;
+
+const BookNameStyled = styled.span`
+   font-weight:bold;
+   margin-left:1rem
+
+`;
+
+const PriceStyled = styled.span`
+   margin-right:3rem;
+`;
 function DashboardPage(props) {
+    const { users, bills, products } = useSelector(state => state.home);
+
     return (
         <div>
-            <Row justify="space-between">
-                <Col span={8}>
+            <Row justify="space-between" gutter={[20, 20]}>
+                <Col span={10}>
                     <Wrapper>
                         <TopStyled>
-                            <TitleStyled>Overviews</TitleStyled>
-                            <span>Octobor</span>
+                            <TitleStyled>Orders</TitleStyled>
+                            <Button
+                                size="large"
+                                shape="circle"
+                                type="text"
+                                icon={
+                                    <Badge
+                                        dot
+                                        size="small">
+                                        <BellOutlined style={{ fontSize: 13 }} />
+                                    </Badge>
+                                }>
+                            </Button>
                         </TopStyled>
                         <div>
-                            <div></div>
+                            <BillConfirm />
                         </div>
                     </Wrapper>
 
                     <Wrapper>
                         <TopStyled>
-                            <TitleStyled>Orders</TitleStyled>
-                            <span>
-                                1/1/2021 <ArrowRightOutlined /> now
-                            </span>
+                            <TitleStyled>Most selling</TitleStyled>
                         </TopStyled>
                         <div>
-                            <Chart
-                                height="270px"
-                                options={ORDERS_OPTIONS}
-                                series={ORDERS_SERIES}
-                            />
+                            <SellingItemStyled>
+                                <div>
+                                    <img
+                                        width="40px"
+                                        height="50px"
+                                        src="http://localhost:8000/api/images/image99826200.png" alt="image" />
+                                    <BookNameStyled>Tên sách</BookNameStyled>
+                                </div>
+                                <div>
+                                    <PriceStyled>880 <DolarIconStyled /></PriceStyled>
+                                    <span>Đã bán</span>
+                                </div>
+                            </SellingItemStyled>
+                            <SellingItemStyled>
+                                <div>
+                                    <img
+                                        width="40px"
+                                        height="50px"
+                                        src="http://localhost:8000/api/images/image99826200.png" alt="image" />
+                                    <BookNameStyled>Tên sách</BookNameStyled>
+                                </div>
+                                <div>
+                                    <PriceStyled>880 <DolarIconStyled /></PriceStyled>
+                                    <span>Đã bán</span>
+                                </div>
+                            </SellingItemStyled>
+                            <SellingItemStyled>
+                                <div>
+                                    <img
+                                        width="40px"
+                                        height="50px"
+                                        src="http://localhost:8000/api/images/image99826200.png" alt="image" />
+                                    <BookNameStyled>Tên sách</BookNameStyled>
+                                </div>
+                                <div>
+                                    <PriceStyled>880 <DolarIconStyled /></PriceStyled>
+                                    <span>Đã bán</span>
+                                </div>
+                            </SellingItemStyled>
                         </div>
                     </Wrapper>
 
                 </Col>
-                <Col span={15}>
+                <Col span={14}>
                     <Wrapper>
                         <div>
                             <TopStyled>
@@ -119,7 +176,7 @@ function DashboardPage(props) {
                                         <RiseOutlined />
                                     </IconStyled>
                                     <div>
-                                        <div>230k</div>
+                                        <div>{bills.length}</div>
                                         <SubTitle>Sales</SubTitle>
                                     </div>
                                 </ItemStyled>
@@ -130,7 +187,7 @@ function DashboardPage(props) {
                                         <UserOutlined />
                                     </IconStyled>
                                     <div>
-                                        <div>8.549k</div>
+                                        <div>{users.length - 1}</div>
                                         <SubTitle>Customers</SubTitle>
                                     </div>
                                 </ItemStyled>
@@ -141,7 +198,7 @@ function DashboardPage(props) {
                                         <ReadOutlined />
                                     </IconStyled>
                                     <div>
-                                        <div>1.423k</div>
+                                        <div>{products.length}</div>
                                         <SubTitle>Products</SubTitle>
                                     </div>
                                 </ItemStyled>
@@ -152,7 +209,7 @@ function DashboardPage(props) {
                                         <DollarOutlined />
                                     </IconStyled>
                                     <div>
-                                        <div>9745</div>
+                                        <div>{revenue(bills)}</div>
                                         <SubTitle>Revenue</SubTitle>
                                     </div>
                                 </ItemStyled>
@@ -166,12 +223,6 @@ function DashboardPage(props) {
                     </Wrapper>
                 </Col>
             </Row>
-            <Wrapper>
-                <TitleStyled>Bill confirm</TitleStyled>
-                <div>
-                    <BillConfirm />
-                </div>
-            </Wrapper>
         </div >
     );
 }

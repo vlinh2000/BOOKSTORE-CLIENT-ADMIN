@@ -7,8 +7,7 @@ import styled from 'styled-components';
 import { BellOutlined, BookOutlined, LogoutOutlined, NotificationOutlined, ReadOutlined, SearchOutlined, ShopOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom';
 import { switchProfile } from 'features/Home/homeSlice';
-import { useDispatch } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
 
 const HeaderStyled = styled.div`
     display:flex;
@@ -64,6 +63,8 @@ function Header(props) {
 
     const [isVisible, setIsVisible] = React.useState(false);
 
+    const { user } = useSelector(state => state.auth.currentUser);
+
     const handleVisibleChange = visible => {
         setIsVisible(visible);
     };
@@ -106,22 +107,6 @@ function Header(props) {
 
             </div>
             <MenuRightStyled>
-                <ButtonStyled
-                    size="large"
-                    shape="circle"
-                    type="text"
-                    icon={<SearchOutlined />} />
-                <ButtonStyled
-                    size="large"
-                    shape="circle"
-                    type="text"
-                    icon={
-                        <Badge
-                            dot
-                            size="small">
-                            <BellOutlined />
-                        </Badge>} >
-                </ButtonStyled>
 
                 <PopoverStyled
                     content={
@@ -148,11 +133,11 @@ function Header(props) {
                     trigger="click" >
 
                     <UserInfo>
-                        <span>John Dong</span>
+                        <span>{user.name}</span>
                         <div style={{ color: "#AAA", textAlign: 'end', fontSize: 10 }} >admin</div>
                     </UserInfo>
 
-                    <Avatar src="https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/13-small.d796bffd.png" size="large">L</Avatar>
+                    <Avatar src={user.avatar}>L</Avatar>
                 </PopoverStyled>
             </MenuRightStyled>
         </HeaderStyled>
