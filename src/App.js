@@ -29,7 +29,7 @@ function App() {
           <ToastContainer />
           <Switch>
             <Redirect exact from="/" to="/home/dashboard" />
-            <Route path="/authentication/login" component={Login}></Route>
+            <Route path="/authentication/login" component={Login} />
             <Route
               path="/home"
               render={() => {
@@ -37,6 +37,7 @@ function App() {
                 return <Home />;
               }}
             ></Route>
+            <Route component={() => <div>NOT FOUND</div>} />
           </Switch>
         </Router>
       </Suspense>

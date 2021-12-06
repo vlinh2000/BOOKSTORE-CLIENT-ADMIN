@@ -6,11 +6,12 @@ import styled from "styled-components";
 const Wrapper = styled.div`
     background-color:#FFF;
     padding:1rem 1.25rem;
-    border-radius:10px;
-    box-shadow:1px 1px 10px 0px #ddd;
-    min-height:200px;
+    border-radius:5px;
+    box-shadow:1px 1px 25px 10px #ddd;
+    min-height:170px;
     margin-bottom:1rem;
     position:relative;
+    border:1px solid #39CCCC;
 `;
 
 const TopStyled = styled.div`
@@ -25,9 +26,9 @@ const TopStyled = styled.div`
 
 
 const TitleStyled = styled.p`
-    color:#6e6b7b;
+    color:#7367f0;
     font-size:1.15rem;
-    font-weight:500;
+    font-weight:bold;
     letter-spacing:0.5px;
 `;
 
@@ -133,8 +134,15 @@ const DolarIconStyled = styled(DollarOutlined)`
     color:#ff9f43;
     font-size:10px;
 `;
+
+const DolarTextStyled = styled.span`
+   font-size:9px;
+   color:#ea5455;
+   font-style:italic;
+`;
+
 export {
     Wrapper, TopStyled, TitleStyled, AddButtonStyled,
     RemoveButtonStyled, EditButtonStyled, AddButton,
-    FormItemStyled, ResetButton, DolarIconStyled, CancelButton
+    FormItemStyled, ResetButton, DolarIconStyled, CancelButton, DolarTextStyled
 }

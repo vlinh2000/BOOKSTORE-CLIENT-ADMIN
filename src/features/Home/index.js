@@ -42,12 +42,13 @@ function Home(props) {
                     <Profile />
                     <div className="content">
                         <Switch>
-                            <Route exact path={`${match.url}/dashboard`} component={DashboardPage}></Route>
+                            <Redirect exact from="/home" to="/home/dashboard" />
+                            <Route path={`${match.url}/dashboard`} component={DashboardPage}></Route>
                             <Route path={`${match.url}/product`} component={ProductPage}></Route>
                             <Route path={`${match.url}/bill`} component={BillPage}></Route>
                             <Route path={`${match.url}/category`} component={CategoryPage}></Route>
                             <Route path={`${match.url}/user`} component={UserPage}></Route>
-                            <Route component={<div>not found</div>} />
+                            <Route component={() => <div>not found</div>} />
                         </Switch>
                     </div>
                 </Col>

@@ -42,7 +42,18 @@ const initialState = {
 const auth = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        logOut: (state) => {
+            state.isAuth = false;
+            state.currentUser = {
+                auth: {
+                    token: null,
+                    refreshToken: null
+                },
+                user: {}
+            }
+        }
+    },
     extraReducers: {
         //handle get infomation
         [getMe.pending]: (state) => {
@@ -72,6 +83,6 @@ const auth = createSlice({
 
 const { actions, reducer } = auth;
 
-export const { } = actions;
+export const { logOut } = actions;
 
 export default reducer;

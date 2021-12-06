@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Menu } from 'antd';
-import { DashboardOutlined, ReadOutlined, ShopOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
+import { DashboardOutlined, DatabaseOutlined, FileOutlined, FileProtectOutlined, ReadOutlined, ShopOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
 import { LOGO } from '../../constants/Global';
 import { Link, useRouteMatch, useLocation } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ const SideBarStyled = styled.div`
     padding:2rem 1.5rem;
     position:fixed;
     width:270px;
-    box-shadow:1px 1px 20px 1px #EEE;
+    box-shadow:1px 1px 20px 10px #DDD;
     `;
 
 const LogoStyled = styled.div`
@@ -27,7 +27,7 @@ const LogoStyled = styled.div`
 const MenuItemStyled = styled(Menu.Item)`
 
     border-radius: 5px;
-    font-size:15px;
+    font-size:16px;
     color: #6e6b7b;
     transition: all .3s;
 `;
@@ -92,14 +92,14 @@ function SideBar(props) {
                 </MenuItemStyled>
                 <MenuItemStyled
                     key="category"
-                    icon={<ShopOutlined />}>
+                    icon={<DatabaseOutlined />}>
                     <LinkStyled to="/home/category">
                         Category
                     </LinkStyled>
                 </MenuItemStyled>
                 <MenuItemStyled
                     key="bill"
-                    icon={<WalletOutlined />}>
+                    icon={<FileProtectOutlined />}>
                     <LinkStyled to="/home/bill">
                         Bill
                     </LinkStyled>

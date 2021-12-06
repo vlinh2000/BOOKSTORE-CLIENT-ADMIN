@@ -183,7 +183,7 @@ function ComfirmOrder(props) {
                                 </InfoStyled>
                                 <InfoStyled>
                                     <TitleInfo>Create at:</TitleInfo>
-                                    <ContentStyled>{moment(order.createAt).format("DD/MM/YYYY HH:MM A")}</ContentStyled>
+                                    <ContentStyled>{moment(order.createAt).format("DD/MM/YYYY HH:mm A")}</ContentStyled>
                                 </InfoStyled>
                                 <InfoStyled>
                                     <TitleInfo>Pay status:</TitleInfo>
@@ -196,7 +196,7 @@ function ComfirmOrder(props) {
                                     order.pay && <InfoStyled>
                                         <TitleInfo>Tradding code:</TitleInfo>
                                         <ContentStyled>
-                                            <TraddingCodeStyled>hieulon</TraddingCodeStyled>
+                                            <TraddingCodeStyled>{order.traddingCode}</TraddingCodeStyled>
                                         </ContentStyled>
                                     </InfoStyled>
                                 }

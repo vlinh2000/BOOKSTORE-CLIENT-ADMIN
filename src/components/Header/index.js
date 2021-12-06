@@ -4,21 +4,22 @@ import { Menu, Avatar, Button, Popover, Breadcrumb, Badge, Tooltip } from 'antd'
 
 import styled from 'styled-components';
 
-import { BellOutlined, BookOutlined, LogoutOutlined, NotificationOutlined, ReadOutlined, SearchOutlined, ShopOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons'
+import { BellOutlined, BookOutlined, DatabaseOutlined, FileProtectOutlined, LogoutOutlined, NotificationOutlined, ReadOutlined, SearchOutlined, ShopOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom';
 import { switchProfile } from 'features/Home/homeSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from 'features/Authentication/authSlice';
 
 const HeaderStyled = styled.div`
     display:flex;
     justify-content:space-between;
     padding:0.5rem 2rem;
     background:#FFF;
+    border:1px solid #0074D9;
     margin-top:1.5rem;
     margin-right:2rem;
     border-radius:10px;
     align-items:center;
-    box-shadow: 1px 1px 3px 0px #CCC;
     position:fixed;
     width:75%;
     z-index:1000;
@@ -34,7 +35,7 @@ const UserInfo = styled.div`
     font-size:13px;
     letter-spacing:0.5px;
     font-weight:bold;
-    color:#888;
+    color:#555;
     margin:0 0.5rem;
 
 
@@ -49,7 +50,7 @@ const ModalUserInfo = styled.div`
 `;
 
 const ButtonStyled = styled(Button)`
-    color:#888;
+    color:#555;
 `;
 Header.propTypes = {
 
@@ -74,6 +75,10 @@ function Header(props) {
         dispatch(switchProfile(true));
     }
 
+    const handleLogout = () => {
+        dispatch(logOut());
+    }
+
     return (
         <HeaderStyled>
             <div>
@@ -92,7 +97,7 @@ function Header(props) {
                             size="large"
                             shape="circle"
                             type="text"
-                            icon={<ShopOutlined />} />
+                            icon={<DatabaseOutlined />} />
                     </Tooltip>
                 </Link>
                 <Link to="/home/bill">
@@ -101,13 +106,22 @@ function Header(props) {
                             size="large"
                             shape="circle"
                             type="text"
-                            icon={<WalletOutlined />} />
+                            icon={<FileProtectOutlined />} />
+                    </Tooltip>
+                </Link>
+                <Link to="/home/user">
+                    <Tooltip title="Users">
+                        <ButtonStyled
+                            size="large"
+                            shape="circle"
+                            type="text"
+                            icon={<UserOutlined />} />
                     </Tooltip>
                 </Link>
 
             </div>
             <MenuRightStyled>
-        
+
                 <PopoverStyled
                     content={
                         <ModalUserInfo>
@@ -123,6 +137,7 @@ function Header(props) {
                             <Button
                                 style={{ textAlign: 'start' }}
                                 type="text"
+                                onClick={handleLogout}
                                 icon={<LogoutOutlined />}>
                                 Logout
                             </Button>
@@ -134,7 +149,7 @@ function Header(props) {
 
                     <UserInfo>
                         <span>{user.name}</span>
-                        <div style={{ color: "#AAA", textAlign: 'end', fontSize: 10 }} >admin</div>
+                        <div style={{ color: "#FFDC00", textAlign: 'end', fontSize: 10 }} >admin</div>
                     </UserInfo>
 
                     <Avatar src={user.avatar}>L</Avatar>

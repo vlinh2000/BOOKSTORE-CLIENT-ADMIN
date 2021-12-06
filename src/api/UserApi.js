@@ -6,8 +6,17 @@ export const UserApi = {
         return axiosClient.get(endpoint);
     },
     get: () => {
-        const endpoint = `/user`;
-        return axiosClient.get(endpoint);
+        return new Promise((resolve, reject) => {
+            setTimeout(async () => {
+                try {
+                    const endpoint = `/user`;
+                    const response = await axiosClient.get(endpoint);
+                    resolve(response);
+                } catch (error) {
+                    reject(error);
+                }
+            }, 2000);
+        })
     },
     // post: (data) => {
     //     const endpoint = `/user`;
@@ -22,17 +31,8 @@ export const UserApi = {
         return axiosClient.delete(endpoint);
     },
     post_login: (data) => {
-        return new Promise((resolve, reject) => {
-            setTimeout(async () => {
-                try {
-                    const endpoint = `/user/login`;
-                    const response = await axiosClient.post(endpoint, data);
-                    resolve(response);
-                } catch (error) {
-                    reject(error);
-                }
-            }, 2000)
-        })
+        const endpoint = `/user/login`;
+        return axiosClient.post(endpoint, data);
 
     }
 }
