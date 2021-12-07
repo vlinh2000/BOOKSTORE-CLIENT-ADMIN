@@ -1,6 +1,7 @@
 import { DollarOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import { Form } from "antd";
+import { Table } from "antd";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -141,8 +142,62 @@ const DolarTextStyled = styled.span`
    font-style:italic;
 `;
 
+const TableStyled = styled(Table)`
+    
+     th{
+        background-color:#0074F9!important;
+        color:#FFF!important;
+    }
+    th,td{
+        padding:0.5rem 0.75rem!important;
+        text-align:center!important;
+        font-size:13px!important;
+        font-weight:500;
+    }
+
+    .ant-pagination li {
+        border-radius:50%!important;
+        border:none;
+    }
+    
+    .ant-pagination-item-link{
+        border-radius:50%!important;
+        border:none;
+        &:not([disabled]):hover{
+            background:#EEE;
+            color:#111;
+        }
+    }
+    .ant-pagination-item:not(.ant-pagination-item-active):hover{
+        background:#EEE;
+        a{
+            color:#111;
+        }
+    }
+    
+    .ant-pagination-item-active a{
+        color:#FFF;
+    } 
+    .ant-pagination-item-active{
+        background:#39CCCC;
+        border-color:#39CCCC;
+    }
+
+`;
+
+const BackgroundText = styled.span`
+    display:inline-block;
+    background:${props => props.color};
+    box-shadow:1px 1px 25px -8px #BBB;
+    padding:4px 10px;
+    font-size:10px;
+    font-weight:bold;
+    color:#FFF;
+    `;
+
 export {
     Wrapper, TopStyled, TitleStyled, AddButtonStyled,
     RemoveButtonStyled, EditButtonStyled, AddButton,
     FormItemStyled, ResetButton, DolarIconStyled, CancelButton, DolarTextStyled
+    , TableStyled, BackgroundText
 }

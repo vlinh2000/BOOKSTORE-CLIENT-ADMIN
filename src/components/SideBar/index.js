@@ -38,7 +38,7 @@ const MenuStyled = styled(Menu)`
     .ant-menu-item-selected {
         background: linear-gradient(118deg, #7367f0, rgba(115, 103, 240, 0.7));
         color: #fff !important;
-        box-shadow: 0 0 10px 1px rgb(115 103 240);
+        box-shadow: 0 0 10px 0px rgb(115 103 240);
 
         a { 
             color: #fff!important;

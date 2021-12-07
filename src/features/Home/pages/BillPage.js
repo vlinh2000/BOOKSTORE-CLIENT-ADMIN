@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, message, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
+import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TableStyled, TitleStyled, TopStyled, Wrapper, OrangeText, GreenText, BackgroundText } from 'assets/styles/globalStyled';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import styled from 'styled-components';
@@ -13,11 +13,24 @@ BillPage.propTypes = {
 
 };
 
+const ExpandTableStyled = styled(Table)`
+    .ant-table-content{
+        border:1px solid #ff6085!important;
+        margin:1rem 0;
+    }
 
-const TableStyled = styled(Table)`
-.ant-table{
-    font-size:12px;
+    th{
+        background-color:#ff6085!important;
+        color:#FFF!important;
+    }
+    th,td{
+        padding:0.5rem 0.75rem!important;
+        text-align:center!important;
+        font-size:13px!important;
+        font-weight:500;
 }
+
+
 `;
 
 function BillPage(props) {
@@ -39,7 +52,7 @@ function BillPage(props) {
 
     const expandedRowRender = () => {
         const columns = [
-            { title: 'Image', dataIndex: 'image', key: 'image', render: text => <img src={text} alt="image" width="30px" height="50px" /> },
+            { title: 'Image', dataIndex: 'image', key: 'image', render: text => <img src={text} alt="image" width="40px" height="50px" /> },
             { title: 'Name', dataIndex: 'name', key: 'name' },
             { title: 'Quantity', dataIndex: 'quantity', key: 'quantity' },
             { title: 'Price', dataIndex: 'price', key: 'price' },
@@ -54,7 +67,7 @@ function BillPage(props) {
             price: product.price,
             subTotal: product.subTotal
         }))
-        return <Table columns={columns} dataSource={data} pagination={false} />;
+        return <ExpandTableStyled columns={columns} dataSource={data} pagination={false} />;
     };
 
     const columns = [
@@ -63,12 +76,12 @@ function BillPage(props) {
         { title: 'Phone', dataIndex: 'phone', key: 'phone' },
         { title: 'Address', dataIndex: 'address', key: 'address' },
         { title: 'Order date', dataIndex: 'orderDate', key: 'orderDate' },
-        { title: 'Received date', dataIndex: 'receivedDate', key: 'receivedDate' },
-        { title: 'Total Price', dataIndex: 'totalPrice', key: 'totalPrice' },
-        { title: 'Status', dataIndex: 'status', key: 'status' },
+        { title: 'Received', dataIndex: 'receivedDate', key: 'receivedDate' },
+        { title: 'Price', dataIndex: 'totalPrice', key: 'totalPrice' },
+        { title: 'Status', dataIndex: 'status', key: 'status', render: (text) => { return text === "Shipping" ? <BackgroundText color="#ff9f43">{text}</BackgroundText> : <BackgroundText color="#04AA6D">{text}</BackgroundText> } },
         {
             title: <SettingOutlined />, key: 'action', render: (text, record) => <>
-                <Tooltip title="Remove these products">
+                <Tooltip title="Delete">
                     <Popconfirm
                         onConfirm={() => handleRemove(record.key)}
                         title="Are you sure?"

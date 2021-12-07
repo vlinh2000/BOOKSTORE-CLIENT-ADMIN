@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Button, message, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
+import { AddButtonStyled, BackgroundText, EditButtonStyled, GreenHeavyText, LighterYellowText, LimeText, PurpleText, RemoveButtonStyled, TableStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserApi } from 'api/UserApi';
 import { fetchUsers } from '../homeSlice';
@@ -46,7 +46,7 @@ function UserPage(props) {
         { title: 'Permission', dataIndex: 'permission', key: 'permission' },
         {
             title: <SettingOutlined />, key: 'action', render: (text, record) => <>
-                <Tooltip title="Remove these users">
+                <Tooltip title="Delete">
                     <Popconfirm
                         disabled={record.key === user._id}
                         onConfirm={() => handleRemove(record.key)}
@@ -69,7 +69,7 @@ function UserPage(props) {
         {
             key: user._id, index: index + 1, avatar: user.avatar,
             name: user.name, phone: user.phoneNumber, address: user.address,
-            email: user.email, permission: user.key === 0 ? "admin" : "customer"
+            email: user.email, permission: user.key === 0 ? <BackgroundText color="#FFDC00">Admin</BackgroundText> : <BackgroundText color="#01FF70">Customer</BackgroundText>
         }
     )), [users]);
 
@@ -82,7 +82,7 @@ function UserPage(props) {
                 <TitleStyled>Users</TitleStyled>
 
             </TopStyled>
-            <Table
+            <TableStyled
                 bordered
                 pagination={{ defaultPageSize: 5 }}
                 columns={columns}

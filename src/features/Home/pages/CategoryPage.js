@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, message, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
+import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TableStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
 import AddCategory from '../Components/Modals/AddCategory';
 import { useDispatch, useSelector } from 'react-redux';
 import { CategoryApi } from 'api/CategoryApi';
@@ -62,7 +62,7 @@ function CategoryPage(props) {
                         icon={<EditOutlined />} />
                 </Tooltip>
                 <Tooltip
-                    title="Remove these products">
+                    title="Delete">
                     <Popconfirm
 
                         onConfirm={() => handleRemove(record.key)}
@@ -100,7 +100,7 @@ function CategoryPage(props) {
 
 
             </TopStyled>
-            <Table
+            <TableStyled
                 bordered
                 pagination={{ defaultPageSize: 5 }}
                 columns={columns}

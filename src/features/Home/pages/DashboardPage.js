@@ -181,7 +181,7 @@ function DashboardPage(props) {
                                         <div style={{ display: "flex" }}>
                                             <div>
                                                 <Popover content={<AccountInfo info={customer} />}>
-                                                    <EyeOutlined style={{ fontSize: 15, marginRight: '1rem', cursor: "pointer", color: "#85144b" }} />
+                                                    <EyeOutlined style={{ fontSize: 15, marginRight: '1rem', cursor: "pointer", color: "#ff6085", padding: "2px 6px", border: "1px solid #ff6085" }} />
                                                 </Popover>
                                                 <Avatar
                                                     size="large"

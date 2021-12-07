@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, message, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
+import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TableStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
 import AddProduct from '../Components/Modals/AddProduct';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeDefaultValues } from 'utils/common';
@@ -79,7 +79,7 @@ function ProductPage(props) {
                         shape="circle"
                         icon={<EditOutlined />} />
                 </Tooltip>
-                <Tooltip title="Remove these products">
+                <Tooltip title="Delete">
                     <Popconfirm
                         // disabled={selectedRow.length < 1}
                         onConfirm={() => handleRemove(record.key)}
@@ -130,7 +130,7 @@ function ProductPage(props) {
                 </Tooltip>
 
             </TopStyled>
-            <Table
+            <TableStyled
                 bordered
                 pagination={{ defaultPageSize: 4 }}
                 columns={columns}
