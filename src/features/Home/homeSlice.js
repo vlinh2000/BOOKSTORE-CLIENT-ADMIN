@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { BillApi } from 'api/BillApi';
 import { CategoryApi } from 'api/CategoryApi';
+import { PaymentApi } from 'api/PaymentApi';
 import { ProductApi } from 'api/ProductApi';
 import { UserApi } from 'api/UserApi';
 
@@ -41,6 +42,18 @@ export const fetchBills = createAsyncThunk("home/fetchBills", async (data, { ful
 
 })
 
+export const fetchPayments = createAsyncThunk("home/fetchPayments", async (data, { fulfillWithValue, rejectWithValue }) => {
+
+    try {
+        const { payments } = await PaymentApi.get_All();
+        return fulfillWithValue(payments);
+
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+
+})
+
 export const fetchUsers = createAsyncThunk("home/fetchUsers", async (data, { fulfillWithValue, rejectWithValue }) => {
 
     try {
@@ -60,6 +73,7 @@ const initialState = {
     bills: [],
     orders: [],
     users: [],
+    payments: [],
     error: '',
     isVisibleProfile: false,
     isLoading: false
@@ -83,7 +97,7 @@ const home = createSlice({
             state.isLoading = false;
             state.products = action.payload;
         },
-        [fetchProducts.pending]: (state, action) => {
+        [fetchProducts.rejected]: (state, action) => {
             state.isLoading = false;
             state.error = action.error;
         },
@@ -95,7 +109,7 @@ const home = createSlice({
             state.isLoading = false;
             state.categories = action.payload;
         },
-        [fetchCategories.pending]: (state, action) => {
+        [fetchCategories.rejected]: (state, action) => {
             state.isLoading = false;
             state.error = action.error;
         },
@@ -111,7 +125,7 @@ const home = createSlice({
             state.bills = bills;
             state.orders = orders;
         },
-        [fetchBills.pending]: (state, action) => {
+        [fetchBills.rejected]: (state, action) => {
             state.isLoading = false;
             state.error = action.error;
         },
@@ -123,7 +137,19 @@ const home = createSlice({
             state.isLoading = false;
             state.users = action.payload;
         },
-        [fetchUsers.pending]: (state, action) => {
+        [fetchUsers.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.error;
+        },
+        //handle fetch payments
+        [fetchPayments.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [fetchPayments.fulfilled]: (state, action) => {
+            state.isLoading = false;
+            state.payments = action.payload;
+        },
+        [fetchPayments.rejected]: (state, action) => {
             state.isLoading = false;
             state.error = action.error;
         },

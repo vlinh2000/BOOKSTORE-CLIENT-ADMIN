@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Menu } from 'antd';
-import { DashboardOutlined, DatabaseOutlined, FileOutlined, FileProtectOutlined, ReadOutlined, ShopOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
+import { BankOutlined, DashboardOutlined, DatabaseOutlined, FileOutlined, FileProtectOutlined, ReadOutlined, ShopOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
 import { LOGO } from '../../constants/Global';
 import { Link, useRouteMatch, useLocation } from 'react-router-dom';
 
@@ -102,6 +102,13 @@ function SideBar(props) {
                     icon={<FileProtectOutlined />}>
                     <LinkStyled to="/home/bill">
                         Bill
+                    </LinkStyled>
+                </MenuItemStyled>
+                <MenuItemStyled
+                    key="payment"
+                    icon={<BankOutlined />}>
+                    <LinkStyled to="/home/payment">
+                        Payment
                     </LinkStyled>
                 </MenuItemStyled>
                 <MenuItemStyled
