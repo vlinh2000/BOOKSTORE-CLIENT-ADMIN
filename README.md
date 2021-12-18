@@ -22,4 +22,4 @@
 
 
 ### `Demo`
-- link:https://vlinh-book-store011.surge.sh/home/dashboard
+- link:https://vlinh-book-store011.surge.sh
