@@ -11,6 +11,7 @@
 - Axios.
 - Yub (validate form).
 - Server Api : NodeJS + ExpressJS.
+- MongoDB.
 
 ### `UI`
 - Antd.
@@ -21,4 +22,4 @@
 
 
 ### `Demo`
-- link:
+- link:https://vlinh-book-store011.surge.sh/home/dashboard

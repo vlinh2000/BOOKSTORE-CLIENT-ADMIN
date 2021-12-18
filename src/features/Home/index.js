@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Col, Row } from 'antd';
 import SideBar from 'components/SideBar';
 import Header from 'components/Header';
@@ -14,9 +13,6 @@ import Profile from './Components/Modals/Profile';
 import { useDispatch } from 'react-redux';
 import { fetchBills, fetchCategories, fetchPayments, fetchProducts, fetchUsers } from './homeSlice';
 
-Home.propTypes = {
-
-};
 
 function Home(props) {
 

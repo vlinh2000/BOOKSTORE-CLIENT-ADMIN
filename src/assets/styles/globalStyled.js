@@ -1,5 +1,5 @@
 import { DollarOutlined } from "@ant-design/icons";
-import { Button, Tooltip } from "antd";
+import { Button } from "antd";
 import { Form } from "antd";
 import { Table } from "antd";
 import styled from "styled-components";

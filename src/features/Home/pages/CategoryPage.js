@@ -1,16 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Button, message, Popconfirm, Table, Tooltip } from 'antd';
+import { message, Popconfirm, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TableStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
 import AddCategory from '../Components/Modals/AddCategory';
 import { useDispatch, useSelector } from 'react-redux';
 import { CategoryApi } from 'api/CategoryApi';
 import { fetchCategories } from '../homeSlice';
-
-CategoryPage.propTypes = {
-
-};
 
 
 function CategoryPage(props) {

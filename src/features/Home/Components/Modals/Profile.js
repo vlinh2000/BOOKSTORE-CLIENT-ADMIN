@@ -1,16 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Modal, Form, Avatar, Col, Row, message } from 'antd';
 import { useForm } from 'react-hook-form';
 import InputField from '../../../../custom-fields/InputField';
-import { PlusSquareOutlined, SaveOutlined, UndoOutlined, UploadOutlined } from '@ant-design/icons';
-import { AddButton, AddButtonStyled, RemoveButtonStyled, ResetButton, resetButton } from 'assets/styles/globalStyled';
+import { SaveOutlined, UndoOutlined } from '@ant-design/icons';
+import { AddButton, ResetButton } from 'assets/styles/globalStyled';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import UploadField from 'custom-fields/UploadField';
 import { profileSchema } from 'yup/profileSchema';
-import { checkChangeValue, saveAble } from 'utils/common';
 import { useDispatch, useSelector } from 'react-redux';
 import { switchProfile } from 'features/Home/homeSlice';
 import { UserApi } from 'api/UserApi';

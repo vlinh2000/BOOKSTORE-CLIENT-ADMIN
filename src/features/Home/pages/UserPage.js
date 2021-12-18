@@ -1,15 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Avatar, Button, message, Popconfirm, Table, Tooltip } from 'antd';
-import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import { AddButtonStyled, BackgroundText, EditButtonStyled, GreenHeavyText, LighterYellowText, LimeText, PurpleText, RemoveButtonStyled, TableStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
+import { Avatar, message, Popconfirm, Tooltip } from 'antd';
+import { DeleteOutlined, SettingOutlined } from '@ant-design/icons';
+import { BackgroundText, RemoveButtonStyled, TableStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserApi } from 'api/UserApi';
 import { fetchUsers } from '../homeSlice';
 
-UserPage.propTypes = {
-
-};
 
 
 function UserPage(props) {

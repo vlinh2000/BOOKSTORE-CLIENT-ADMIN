@@ -1,15 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Button, message, Popconfirm, Table, Tooltip } from 'antd';
+import { message, Popconfirm, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TableStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
-import AddCategory from '../Components/Modals/AddCategory';
 import { useDispatch, useSelector } from 'react-redux';
-import { CategoryApi } from 'api/CategoryApi';
-import { fetchCategories, fetchPayments } from '../homeSlice';
+import { fetchPayments } from '../homeSlice';
 import AddPayment from '../Components/Modals/AddPayment';
 import { PaymentApi } from 'api/PaymentApi';
-import useSelection from 'antd/lib/table/hooks/useSelection';
 
 PaymentPage.propTypes = {
 
@@ -55,7 +51,7 @@ function PaymentPage(props) {
 
     const columns = [
         { title: '#', dataIndex: 'index', key: 'index' },
-        { title: 'Type', dataIndex: 'type', key: 'type', render: (text) => <img width={70} height={50} src={text} /> },
+        { title: 'Type', dataIndex: 'type', key: 'type', render: (text) => <img width={70} height={50} src={text} alt="type" /> },
         { title: 'Holder', dataIndex: 'holder', key: 'holder' },
         { title: 'Account number', dataIndex: 'accountNumber', key: 'accountNumber' },
         {

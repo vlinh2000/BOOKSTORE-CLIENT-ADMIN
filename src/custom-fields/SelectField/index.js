@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Controller } from 'react-hook-form';
 
-import { Form, Select } from 'antd'
+import { Select } from 'antd'
 import styled from 'styled-components';
 import { FormItemStyled } from 'assets/styles/globalStyled';
 

@@ -1,14 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Menu } from 'antd';
-import { BankOutlined, DashboardOutlined, DatabaseOutlined, FileOutlined, FileProtectOutlined, ReadOutlined, ShopOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
+import { BankOutlined, DashboardOutlined, DatabaseOutlined, FileProtectOutlined, ReadOutlined, UserOutlined } from '@ant-design/icons';
 import { LOGO } from '../../constants/Global';
-import { Link, useRouteMatch, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-SideBar.propTypes = {
-
-};
 
 const SideBarStyled = styled.div`
     height:100vh;
@@ -57,9 +53,6 @@ const LinkStyled = styled(Link)`
 `;
 
 function SideBar(props) {
-
-    const match = useRouteMatch();
-
     const location = useLocation()
 
     return (

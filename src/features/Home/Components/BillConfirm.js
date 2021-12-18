@@ -1,10 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Button, Table } from 'antd';
-import { DollarOutlined, EyeOutlined, SettingOutlined } from '@ant-design/icons';
+import { SettingOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { DolarIconStyled, DolarTextStyled } from 'assets/styles/globalStyled';
+import { DolarTextStyled } from 'assets/styles/globalStyled';
 
 import moment from "moment";
 import ComfirmOrder from './Modals/ComfirmOrder';

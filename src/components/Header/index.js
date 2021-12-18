@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Menu, Avatar, Button, Popover, Breadcrumb, Badge, Tooltip } from 'antd';
+import { Avatar, Button, Popover, Tooltip } from 'antd';
 
 import styled from 'styled-components';
 
-import { BellOutlined, BookOutlined, DatabaseOutlined, FileProtectOutlined, LogoutOutlined, NotificationOutlined, ReadOutlined, SearchOutlined, ShopOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons'
+import { DatabaseOutlined, FileProtectOutlined, LogoutOutlined, ReadOutlined, UserOutlined, } from '@ant-design/icons'
 import { Link } from 'react-router-dom';
 import { switchProfile } from 'features/Home/homeSlice';
 import { useDispatch, useSelector } from 'react-redux';

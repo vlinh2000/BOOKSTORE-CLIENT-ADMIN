@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { message } from 'antd';
 import { UserApi } from 'api/UserApi'
 
 export const getMe = createAsyncThunk("authentication/getMe", async (data, { fulfillWithValue, rejectWithValue }) => {

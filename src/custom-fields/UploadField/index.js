@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Controller } from 'react-hook-form';
-import { FileDoneOutlined, UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import { FormItemStyled } from 'assets/styles/globalStyled';
 import { Button, message, Upload } from 'antd';
 import styled from 'styled-components';

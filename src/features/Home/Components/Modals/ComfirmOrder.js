@@ -1,17 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Badge, Col, Modal, Row, Menu, Popconfirm, message } from 'antd';
+import { Col, Modal, Row, Popconfirm, message } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
-import { CheckCircleOutlined, CheckOutlined } from '@ant-design/icons';
-import { AddButton, CancelButton, DolarIconStyled, RemoveButtonStyled } from 'assets/styles/globalStyled';
+import { AddButton, CancelButton, DolarIconStyled } from 'assets/styles/globalStyled';
 import { BillApi } from 'api/BillApi';
 import { useDispatch } from 'react-redux';
 import { fetchBills } from 'features/Home/homeSlice';
 
-ComfirmOrder.propTypes = {
-
-};
 
 const WrapperStyled = styled.div`
     min-height:300px;
@@ -113,6 +108,8 @@ const ControlButton = styled.div`
 
 function ComfirmOrder(props) {
     const { order, isVisible, setIsVisible } = props;
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [isOkLoading, setIsOkLoading] = React.useState(false);
     const dispatch = useDispatch()
 
     //handle update bill
@@ -120,11 +117,15 @@ function ComfirmOrder(props) {
         try {
             await BillApi.update(order._id, data);
             message.success(successMessage);
+            setIsLoading(false);
+            setIsOkLoading(false);
             setIsVisible(false);
             dispatch(fetchBills());
         } catch (error) {
-            const errMessage = error.response.data;
-            message.error(errMessage.message)
+            const errMessage = error.response?.data;
+            message.error(errMessage?.message)
+            setIsOkLoading(false);
+            setIsLoading(false);
         }
     }
 
@@ -132,12 +133,14 @@ function ComfirmOrder(props) {
         const data = {
             status: "Shipping"
         }
+        setIsOkLoading(true);
         onUpdate(data, "Comfirm order successfully!");
     }
     const handleCancelOrder = () => {
         const data = {
             status: "Canceled"
         }
+        setIsLoading(true);
         onUpdate(data, "Canceled order successfully!");
     }
 
@@ -239,9 +242,9 @@ function ComfirmOrder(props) {
                         <Popconfirm
                             title="Are you sure to cancel this order ?"
                             onConfirm={handleCancelOrder}>
-                            <CancelButton>Cancel order</CancelButton>
+                            <CancelButton loading={isLoading}>Cancel order</CancelButton>
                         </Popconfirm>
-                        <AddButton onClick={handleComfirm}>Comfirm order</AddButton>
+                        <AddButton loading={isOkLoading} onClick={handleComfirm}>Comfirm order</AddButton>
                     </ControlButton>
                 </WrapperStyled>
             </Modal>

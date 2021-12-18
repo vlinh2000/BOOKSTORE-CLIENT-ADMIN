@@ -1,17 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Select, Modal, Form, Input, Col, Row, Button, Upload, message } from 'antd';
+import { Modal, Form, Col, Row, message } from 'antd';
 import { useForm } from 'react-hook-form';
 import InputField from '../../../../custom-fields/InputField';
-import { PlusSquareOutlined, UploadOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
+import { PlusSquareOutlined } from '@ant-design/icons';
 import { AddButton } from 'assets/styles/globalStyled';
 import SelectField from 'custom-fields/SelectField';
 import UploadField from 'custom-fields/UploadField';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { defaultValues, productSchema } from 'yup/productSchema';
-import { makeDefaultValues, toastError, toastSuccess } from 'utils/common';
+import { toastError, toastSuccess } from 'utils/common';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProductApi } from 'api/ProductApi';
 import { fetchProducts } from 'features/Home/homeSlice';

@@ -1,18 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Button, message, Popconfirm, Table, Tooltip } from 'antd';
+import { message, Popconfirm, Tooltip } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TableStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
 import AddProduct from '../Components/Modals/AddProduct';
 import { useDispatch, useSelector } from 'react-redux';
-import { makeDefaultValues } from 'utils/common';
-import { defaultValues } from 'yup/loginSchema';
 import { ProductApi } from 'api/ProductApi';
 import { fetchProducts } from '../homeSlice';
 
-ProductPage.propTypes = {
-
-};
 
 
 function ProductPage(props) {

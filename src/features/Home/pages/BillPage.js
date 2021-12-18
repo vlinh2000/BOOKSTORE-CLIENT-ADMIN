@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Button, message, Popconfirm, Table, Tooltip } from 'antd';
-import { DeleteOutlined, EditOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import { AddButtonStyled, EditButtonStyled, RemoveButtonStyled, TableStyled, TitleStyled, TopStyled, Wrapper, OrangeText, GreenText, BackgroundText } from 'assets/styles/globalStyled';
+import { message, Popconfirm, Table, Tooltip } from 'antd';
+import { DeleteOutlined, SettingOutlined } from '@ant-design/icons';
+import { RemoveButtonStyled, TableStyled, TitleStyled, TopStyled, Wrapper, BackgroundText } from 'assets/styles/globalStyled';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import styled from 'styled-components';
@@ -52,7 +51,7 @@ function BillPage(props) {
 
     const expandedRowRender = () => {
         const columns = [
-            { title: 'Image', dataIndex: 'image', key: 'image', render: text => <img src={text} alt="image" width="40px" height="50px" /> },
+            { title: 'Image', dataIndex: 'image', key: 'image', render: text => <img src={text} alt="imageProduct" width="40px" height="50px" /> },
             { title: 'Name', dataIndex: 'name', key: 'name' },
             { title: 'Quantity', dataIndex: 'quantity', key: 'quantity' },
             { title: 'Price', dataIndex: 'price', key: 'price' },

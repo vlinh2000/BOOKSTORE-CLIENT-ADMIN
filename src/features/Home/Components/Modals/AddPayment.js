@@ -1,23 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Modal, Form, message } from 'antd';
 import { useForm } from 'react-hook-form';
 import InputField from '../../../../custom-fields/InputField';
-import { PlusSquareOutlined, UploadOutlined } from '@ant-design/icons';
+import { PlusSquareOutlined } from '@ant-design/icons';
 import { AddButton } from 'assets/styles/globalStyled';
 
-import { yupResolver } from '@hookform/resolvers/yup';
-import { categorySchema, defaultValues } from 'yup/categorySchema';
-import { CategoryApi } from 'api/CategoryApi';
+import { defaultValues } from 'yup/categorySchema';
 import { useDispatch } from 'react-redux';
-import { fetchCategories, fetchPayments } from 'features/Home/homeSlice';
+import { fetchPayments } from 'features/Home/homeSlice';
 import UploadField from 'custom-fields/UploadField';
 import { PaymentApi } from 'api/PaymentApi';
-
-AddPayment.propTypes = {
-
-};
-
 
 
 function AddPayment(props) {

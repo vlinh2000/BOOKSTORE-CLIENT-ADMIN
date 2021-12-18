@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Avatar, Col, Row } from 'antd';
+import { Avatar } from 'antd';
 
 AccountInfo.propTypes = {
     info: PropTypes.object

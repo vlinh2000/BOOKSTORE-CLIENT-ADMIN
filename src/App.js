@@ -1,12 +1,11 @@
 import './App.css';
-import { Router, Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
+import { Router, Route, Switch, Redirect } from 'react-router-dom'
 
 import { createBrowserHistory } from 'history'
 import React from 'react';
 import { Suspense } from 'react';
 import { Spin } from 'antd';
-import { fetchProducts } from 'features/Home/homeSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 const Login = React.lazy(() => import('features/Authentication/pages/Login'));

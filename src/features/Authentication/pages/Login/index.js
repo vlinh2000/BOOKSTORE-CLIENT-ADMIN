@@ -3,7 +3,7 @@ import { Wrapper } from 'assets/styles/globalStyled';
 import styled from 'styled-components';
 import { LOGO } from 'constants/Global';
 
-import { Button, Form, message } from 'antd'
+import { Button, Form } from 'antd'
 import InputField from 'custom-fields/InputField';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';

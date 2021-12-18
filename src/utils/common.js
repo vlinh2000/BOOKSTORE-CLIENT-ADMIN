@@ -40,7 +40,6 @@ export const revenue = (bills) => {
 export const getTopSelling = (bills, num) => {
     const products = bills.map(bill => bill.products);
     let listProduct = []
-    let productUnique = [];
     products.forEach(element => {
         element = element.map(x => ({ _id: x._id, name: x.name, image: x.image, quantity: x.quantity, price: x.price }))
         listProduct = [...listProduct, ...element];
@@ -53,7 +52,7 @@ export const getTopSelling = (bills, num) => {
 
     let result = [];
 
-    productBought.map((idProduct) => {
+    productBought.forEach((idProduct) => {
 
         let productInfo = listProduct.filter(product => product._id === idProduct);
         // console.log(productInfo);

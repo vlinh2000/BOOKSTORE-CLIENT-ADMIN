@@ -1,41 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Row, Col, Button, Select, Badge, Tooltip, Avatar, Popover } from 'antd'
+import { Row, Col, Button, Badge, Avatar, Popover } from 'antd'
 import styled from 'styled-components';
-import { ArrowRightOutlined, BellOutlined, DollarCircleFilled, DollarOutlined, ExclamationCircleOutlined, EyeOutlined, ReadOutlined, RightOutlined, RiseOutlined, SendOutlined, ShopOutlined, ShoppingCartOutlined, ShoppingOutlined, UserOutlined } from '@ant-design/icons';
+import {
+    BellOutlined, DollarOutlined, ExclamationCircleOutlined,
+    EyeOutlined, ReadOutlined, RiseOutlined, SendOutlined,
+    ShoppingCartOutlined, UserOutlined
+} from '@ant-design/icons';
 
 import { useSelector } from "react-redux"
 
-import Chart from 'react-apexcharts'
-
-import { DolarIconStyled, DolarTextStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
-import { ORDERS_OPTIONS, ORDERS_SERIES } from 'constants/Global';
+import { DolarTextStyled, TitleStyled, TopStyled, Wrapper } from 'assets/styles/globalStyled';
 import BillConfirm from '../Components/BillConfirm';
 import RevenueChart from '../Components/RevenueChart';
-import { getTopSelling, revenue, topSelling } from 'utils/common';
+import { getTopSelling, revenue } from 'utils/common';
 import { BillApi } from 'api/BillApi';
 import AccountInfo from '../Components/AccountInfo';
 DashboardPage.propTypes = {
 
 };
-
-
-const InfoEarningStyled = styled.div`
-   color:#969696;
-    width:50%;
-
-   span{
-       color:#666;
-       font-size:16px;
-       font-weight:bold;
-   }
-
-   p{
-     font-size:12px;
-     margin-top:1rem;   
-   }
-`;
-
 
 
 const ItemStyled = styled.div`
@@ -158,7 +140,8 @@ function DashboardPage(props) {
                                         <img
                                             width="40px"
                                             height="50px"
-                                            src={product.image} alt="image" />
+                                            src={product.image}
+                                            alt="imageProduct" />
                                         <BookNameStyled>{product.name}</BookNameStyled>
                                     </div>
                                     <div>

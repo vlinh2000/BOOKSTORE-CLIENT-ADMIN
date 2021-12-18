@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { REVENUE_DATA, REVENUE_OPTIONS, REVENUE_SERIES } from '../../../constants/Global';
-import { Col, Divider, Row, Select } from 'antd'
+import { REVENUE_OPTIONS } from '../../../constants/Global';
+import { Select } from 'antd'
 import styled from 'styled-components';
 
 import { useSelector } from 'react-redux'
