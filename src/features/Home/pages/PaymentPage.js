@@ -55,7 +55,7 @@ function PaymentPage(props) {
 
     const columns = [
         { title: '#', dataIndex: 'index', key: 'index' },
-        { title: 'Type', dataIndex: 'type', key: 'type', render: (text) => <img width={70} height={50} src={process.env.REACT_APP_API_URL + '/' + text} /> },
+        { title: 'Type', dataIndex: 'type', key: 'type', render: (text) => <img width={70} height={50} src={text} /> },
         { title: 'Holder', dataIndex: 'holder', key: 'holder' },
         { title: 'Account number', dataIndex: 'accountNumber', key: 'accountNumber' },
         {

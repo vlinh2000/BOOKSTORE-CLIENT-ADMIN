@@ -19,7 +19,7 @@ const defaultValues = {
     quantity: null,
     category: '',
     description: '',
-    banner: '',
-    images: null
+    banner: [],
+    images: []
 }
 export { productSchema, defaultValues };

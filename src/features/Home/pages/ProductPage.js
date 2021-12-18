@@ -101,8 +101,8 @@ function ProductPage(props) {
     const data = React.useMemo(() => products?.map((product, index) => {
 
         return {
-            key: product._id, index: index + 1, image: product.image[0],
-            name: product.name, author: product.author, category: product.category.name,
+            key: product._id, index: index + 1, image: product.banner,
+            name: product.name, author: product.author, category: product.category[0].name,
             stockQuantity: product.stockQuantity, price: product.price
         }
     }), [products])
@@ -132,7 +132,7 @@ function ProductPage(props) {
             </TopStyled>
             <TableStyled
                 bordered
-                pagination={{ defaultPageSize: 4 }}
+                pagination={{ defaultPageSize: 5 }}
                 columns={columns}
                 dataSource={data}
             />

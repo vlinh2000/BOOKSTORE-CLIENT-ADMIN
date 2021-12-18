@@ -79,7 +79,7 @@ function Profile(props) {
         email: user.email,
     }), [user]);
 
-    const { control, handleSubmit, reset, formState: { touchedFields } } = useForm({ resolver: yupResolver(profileSchema), defaultValues });
+    const { control, handleSubmit, reset, setValue, formState: { touchedFields } } = useForm({ resolver: yupResolver(profileSchema), defaultValues });
 
     const [currentAvatar, setCurrentAvatar] = React.useState(() => defaultValues.avatar[0]);
 
@@ -102,7 +102,7 @@ function Profile(props) {
 
         // alert(JSON.stringify(values));
         // return;
-        const fieldUpdate = [];
+        const fieldUpdate = values.avatar[0].originFileObj ? ["avatar"] : [];
 
         for (let key in touchedFields) {
             if (key !== undefined) fieldUpdate.push(key);
@@ -153,6 +153,7 @@ function Profile(props) {
                         <div>
                             <UploadStyled>
                                 <UploadField
+                                    setValue={setValue}
                                     handleReadFile={handleReadFile}
                                     maxCount={1}
                                     name="avatar"
@@ -190,13 +191,11 @@ function Profile(props) {
                     </Row>
                     <AddButton
                         htmlType="submit"
-                        disabled={(Object.keys(touchedFields).length < 1)}
                         icon={<SaveOutlined />}>
                         Save changes
                     </AddButton>
                     <ResetButton
                         onClick={onReset}
-                        disabled={(Object.keys(touchedFields).length < 1)}
                         icon={<UndoOutlined />}>
                         Reset
                     </ResetButton>

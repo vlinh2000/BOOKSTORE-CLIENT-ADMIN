@@ -24,7 +24,7 @@ function AddPayment(props) {
 
     const { isVisible, setIsVisible, payment, isEdit } = props;
 
-    const { control, handleSubmit, reset, formState: { touchedFields } } = useForm();
+    const { control, handleSubmit, reset, setValue, formState: { touchedFields } } = useForm();
 
     const [isLoading, setIsLoading] = React.useState(false);
     const dispatch = useDispatch()
@@ -91,18 +91,27 @@ function AddPayment(props) {
     }
 
     const handleUpdate = async values => {
-
         try {
             //handle other fields
-            let fieldUpdate = {};
+            let fieldUpdate = values.paymentType[0].originFileObj ? { paymentLogo: values.paymentType[0].originFileObj } : {};
+
             for (let key in touchedFields) {
                 fieldUpdate = { ...fieldUpdate, [key]: values[key] }
             }
 
-            if (Object.keys(fieldUpdate).length < 1) message.warning("No infomation change")
-            console.log(touchedFields);
+            if (Object.keys(fieldUpdate).length < 1) {
+                message.warning("No infomation change");
+                return;
+            }
+
+            const data = new FormData();
+
+            for (let key in fieldUpdate) {
+                data.append(key, fieldUpdate[key]);
+            }
+
             setIsLoading(true);
-            const response = await PaymentApi.update(payment._id, fieldUpdate);
+            const response = await PaymentApi.update(payment._id, data);
 
             message.success(response.message);
             setIsVisible(false);
@@ -141,7 +150,9 @@ function AddPayment(props) {
                         placeholder="Payment Type"
                         control={control}
                         listType="picture-card"
-                        options={isEdit && [`${process.env.REACT_APP_API_URL}/${payment.paymentLogo}`]}
+                        setValue={setValue}
+                        maxCount={1}
+                        options={isEdit && [payment.paymentLogo]}
                     />
                     <InputField
                         name="holder"
@@ -154,7 +165,6 @@ function AddPayment(props) {
                         control={control}
                     />
                     <AddButton
-                        disabled={isEdit ? Object.keys(touchedFields).length < 1 : false}
                         htmlType="submit"
                         loading={isLoading}
                         icon={<PlusSquareOutlined />}>

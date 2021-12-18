@@ -30,6 +30,8 @@ function AddProduct(props) {
 
     const [isLoading, setIsLoading] = React.useState(false);
 
+    const [listRemove, setListRemove] = React.useState({ banner: [], images: [] });
+
     const dispatch = useDispatch()
 
     const [form] = Form.useForm();
@@ -42,10 +44,10 @@ function AddProduct(props) {
                 author: product.author,
                 price: product.price,
                 quantity: product.stockQuantity,
-                category: product.category?._id,
+                category: product.category[0]?._id,
                 description: product?.description,
-                banner: [product.image[0]],
-                images: product.image.slice(1)
+                banner: [product.banner],
+                images: product.images
             }
             setDefaultValue(defaultValue);
             reset(defaultValue);
@@ -59,11 +61,10 @@ function AddProduct(props) {
         }
     }, [product, isEdit])
 
-    const { control, handleSubmit, reset, formState } = useForm({ resolver: yupResolver(productSchema), defaultValues });
+    const { control, handleSubmit, reset, formState, setValue } = useForm({ resolver: yupResolver(productSchema), defaultValues });
 
     const handleAdd = values => {
         const { images, banner } = values;
-        const image = [banner[0], ...images];
 
         let formData = new FormData();
 
@@ -74,8 +75,12 @@ function AddProduct(props) {
         formData.append("price", values.price);
         formData.append("quantity", values.quantity);
 
-        image.forEach(file => {
-            formData.append("image", file.originFileObj);
+        images.forEach(file => {
+            formData.append("images", file.originFileObj);
+        })
+
+        banner.forEach(file => {
+            formData.append("banner", file.originFileObj);
         })
 
         const onPost = async (data) => {
@@ -86,6 +91,10 @@ function AddProduct(props) {
                 setIsLoading(false);
                 setIsVisible(false)
                 dispatch(fetchProducts());
+
+                setDefaultValue(defaultValues)
+                reset(defaultValues);
+                form.setFieldsValue(defaultValues);
             } catch (error) {
                 const errMessage = error.response.data;
                 setIsLoading(false);
@@ -100,46 +109,33 @@ function AddProduct(props) {
 
     const handleUpdate = values => {
         const formData = new FormData();
-        console.log({ values })
-        //handle banner & images 
-        const { banner, images } = formState.touchedFields;
-
-        let image = [];
-
-        if (banner || images) {
-
-            if (banner) {
-                formData.append("banner", true);
-            }
-
-            image = [values.banner[0], ...values.images]
-
-            console.log(image);
-
-            image.forEach(file => {
-                if (file.originFileObj) {
-                    formData.append("image", file.originFileObj);
-
-                } else {
-                    formData.append("image", file.url ? file.url : file);
-                }
-            })
-        }
 
         //handle other fields
-        const fieldChange = [];
+        const fieldChange = ["banner", "images"];
         for (let key in formState.touchedFields) {
-            if (key === "banner" || key === "images") continue;
             fieldChange.push(key);
         }
 
 
-
-        fieldChange.forEach(field => {
-            formData.append(field, values[field]);
-        })
+        //list files have been removed
+        let fileRemove = {};
+        for (let key in listRemove) {
+            if (listRemove[key].length > 0) fileRemove = { ...fileRemove, [key]: listRemove[key] };
+        }
+        formData.append("fileRemove", JSON.stringify(fileRemove));
 
         // Get some data change and fill in formData
+        fieldChange.forEach(field => {
+
+            if (Array.isArray(values[field])) {
+                values[field].forEach(fd => {
+                    fd.originFileObj && formData.append(field, fd.originFileObj);
+                })
+            }
+            else {
+                formData.append(field, values[field]);
+            }
+        })
         const onUpdate = async (data) => {
             try {
                 setIsLoading(true);
@@ -148,6 +144,7 @@ function AddProduct(props) {
                 setIsLoading(false);
                 setIsVisible(false)
                 dispatch(fetchProducts());
+                setListRemove({ banner: [], images: [] })
             } catch (error) {
                 const errMessage = error.response.data;
                 setIsLoading(false);
@@ -169,7 +166,7 @@ function AddProduct(props) {
                 title={isEdit ? "Update product" : "New product"}
                 visible={isVisible}
                 footer={false}
-                onCancel={() => setIsVisible(false)}
+                onCancel={() => { setIsVisible(false); setListRemove({ banner: [], images: [] }) }}
                 bodyStyle={{ padding: '2rem 3rem' }}>
                 <Form
                     form={form}
@@ -216,6 +213,8 @@ function AddProduct(props) {
                                 options={defaultValue.banner}
                                 maxCount={1}
                                 listType="picture-card"
+                                setListRemove={setListRemove}
+                                setValue={setValue}
                             />
                         </Col>
                         <Col span={6}>
@@ -233,11 +232,12 @@ function AddProduct(props) {
                                 maxCount={3}
                                 options={defaultValue.images}
                                 listType="picture-card"
+                                setListRemove={setListRemove}
+                                setValue={setValue}
                             />
                         </Col>
                     </Row>
                     <AddButton
-                        disabled={Object.keys(formState.touchedFields).length < 1}
                         loading={isLoading}
                         htmlType="submit"
                         icon={<PlusSquareOutlined />}>
